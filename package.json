@@ -1,0 +1,28 @@
+{
+  "name": "urbandb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PamelaCarina/Urban_dB.git"
+  },
+  "keywords": [],
+  "author": "Pamela Pinilla Banchero",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PamelaCarina/Urban_dB.git"
+  },
+  "dependencies": {
+    "electron-reload": "^1.5.0",
+    "mysql": "^2.18.1",
+    "nedb": "^1.8.0",
+    "promise-mysql": "^5.0.3"
+  },
+  "devDependencies": {
+    "electron": "^11.3.0"
+  }
+}

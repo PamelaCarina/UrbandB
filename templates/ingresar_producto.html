@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/mdb.min.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+
+    <!-- ingreso de nuevos productos -->
+    <form id="form_nuevo_item" class="border border-light p-5">
+
+        <p class="h4 mb-4 text-center"> Ingresar Nuevo Producto</p>
+      
+        <div class="form-outline mb-4">
+          <input type="text" id="nombre" class="form-control" />
+          <label class="form-label" for="nombre">Nombre del producto</label>
+        </div>
+
+        <div class="form-outline mb-4">
+          <input type="text" id="unidad_medida" class="form-control" />
+          <label class="form-label" for="unidad_medida">Unidad de Medida</label>
+        </div>
+
+        <div class="form-outline mb-4">
+            <input type="number" id="id_categoria" class="form-control" />
+            <label class="form-label" for="id_categoria">id categoria</label>
+        </div>
+
+        <div class="form-outline mb-4">
+            <input type="boolean" id="tipo_user" class="form-control" />
+            <label class="form-label" for="tipo_user">tipo</label>
+        </div>
+      
+        <div class="row mb-4">
+          <div class="col d-flex justify-content-center">
+          </div>
+        </div>
+      
+        <button id="btn_ingresar_producto" type="submit" class="btn btn-primary btn-block">Ingresar producto</button>
+      </form>
+
+      <!-- tabla donde se verán los productos ingresados -->
+
+      <table class="table table-hover">
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Unidad de Medida</th>
+                <th>Cantidad</th>
+            </tr>
+
+        </thead>
+          <tbody id="nuevos_items">
+
+          </tbody>
+
+      </table>
+
+      <script src="../js/add1.js"></script>
+</body>
+</html>
