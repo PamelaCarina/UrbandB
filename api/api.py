@@ -31,11 +31,11 @@ class Items(db.Model):
     __tablename__ = 'items'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    nombre = db.Column(db.String(80), unique=True, nullable=False)
-    unidad_medida = db.Column(db.String(80), unique=True, nullable=False)
-    id_categoria = db.Column(db.Integer, unique=True, nullable=False)
-    tipo_user = db.Column(db.String(120), unique=True, nullable=False)
-    critico = db.Column(db.Integer, unique=True, nullable=True)
+    nombre = db.Column(db.String(80), nullable=False)
+    unidad_medida = db.Column(db.String(80), nullable=False)
+    id_categoria = db.Column(db.Integer, nullable=False)
+    tipo_user = db.Column(db.String(120), nullable=False)
+    critico = db.Column(db.Integer, nullable=True)
     timestamp = db.Column(
         db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
 
