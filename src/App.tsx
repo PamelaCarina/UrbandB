@@ -7,6 +7,7 @@ import IngresarProducto from './containers/IngresarProducto';
 //import NuevoProducto from './containers/NuevoProducto';
 import Login from './containers/Login';
 import Categorias from './containers/Categorias';
+import Items from './containers/Items';
 
 
 export default function App() {
@@ -14,6 +15,7 @@ export default function App() {
     <Router>
       <Switch>
         <Route path="/login" component={Login} />
+        <Route path="/items" component={Items} />
         <Route path="/areas" component={Areas} />
         <Route path="/categorias" component={Categorias} />
         <Route path="/ingresar-producto" component={IngresarProducto} />

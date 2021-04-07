@@ -1,18 +1,42 @@
-import React, { useState} from 'react';
+import React, { useState, FC } from 'react';
 //import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
 
-const MyForm = () => {
+interface props {
+  handleAddItems: (item) => void;
+}
+
+// ingProd.tsx state = [item1, item2]
+// setNewitems([item1, item2, item3])
+// state = [item1, item2, item3]
+
+const MyForm: FC<props> = ({ handleAddItems }) => {
   const [name, setName] = useState("");
   const [unidadMedida, setUnidadMedida] = useState("");
   const [critico, setCritico] = useState("");
   const [multiplicador, setMultiplicador] = useState("");
-  const handleSubmit = (e) => {
+
+  const handleSubmit = (e) =>{
     e.preventDefault();
-    console.log(name);
+    // console.log(name);
+    const data = {
+      nombre: name,
+      unidad_medida: unidadMedida,
+      critico : critico,
+      multiplicador: multiplicador
+    }
+    handleAddItems(data);
+
+    // axios.post('http://127.0.0.1:5000/api/items/insert', {data} )
+    // .then(res => {
+    //     console.log(res);
+    //     // console.log(res.data);
+    //   })
   }
+
   return(
     <div>
       <Form onSubmit = {handleSubmit}>

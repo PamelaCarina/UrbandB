@@ -24,5 +24,7 @@
     "test/**/__snapshots__": true,
     "yarn.lock": true,
     "*.{css,sass,scss}.d.ts": true
-  }
+  },
+  "python.pythonPath": "C:\\Python39\\python.exe",
+  "git.ignoreLimitWarning": true
 }

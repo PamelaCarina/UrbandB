@@ -19,6 +19,13 @@ interface tableArr {
     stock: number;
   }[];
 
+  bodyArrNewItems ? : {
+    nombre: string;
+    unidad_medida: number;
+    critico: string;
+    multiplicador: number;
+  }[];
+
   bodyArrAreas ?: {
     areas: string;
   }[];
@@ -28,18 +35,30 @@ interface tableArr {
   }[];
 }
 
-const MyTable: FC<tableArr> = ({headArr, bodyArrItems, bodyArrAreas, bodyArrCategorias}) => {
+const MyTable: FC<tableArr> = ({headArr, bodyArrItems, bodyArrAreas, bodyArrCategorias, bodyArrNewItems}) => {
   let filas;
   if(bodyArrItems){
     filas = bodyArrItems.map((elem)=>{
+                return(
+                    <tr>
+                      <td> {elem.id} </td>
+                      <td> {elem.nombre} </td>
+                      <td> {elem.cantidad} </td>
+                      <td> {elem.unidad_medida} </td>
+                      <td> {elem.fecha} </td>
+                      <td> {elem.stock} </td>
+                    </tr>
+                )
+              })
+  }
+  else if(bodyArrNewItems){
+    filas = bodyArrNewItems.map((elem)=>{
               return(
                   <tr>
-                    <td> {elem.id} </td>
                     <td> {elem.nombre} </td>
-                    <td> {elem.cantidad} </td>
                     <td> {elem.unidad_medida} </td>
-                    <td> {elem.fecha} </td>
-                    <td> {elem.stock} </td>
+                    <td> {elem.critico} </td>
+                    <td> {elem.multiplicador} </td>
                   </tr>
               )
             })
