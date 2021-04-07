@@ -87,7 +87,6 @@ const MyTable: FC<tableArr> = ({headArr, bodyArrItems, bodyArrAreas, bodyArrCate
               )
             })
   }
-
   return(
     <div>
       <Table striped bordered hover>
