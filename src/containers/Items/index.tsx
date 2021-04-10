@@ -7,7 +7,28 @@ import MyFooter from '../../components/Footer';
 import yeison from '../../items.json';
 
 let menuNav = [{name: "Menú", rute: "/menu"}, {name: "Áreas", rute: "/areas"}, {name:"Cerrar Sesión", rute:"/login"}];
-let headTable = [{name: "ID", rute: "h1"}, {name: "Nombre", rute: "h2"}, {name: "Cantidad", rute: "h3"}, {name: "Unidad de Medida", rute: "h4"}, {name: "Fecha", rute: "h5"}, {name: " ", rute: "h6"}];
+let headTable = [
+  {
+    dataField: 'id', 
+    text: 'Código'
+  }, 
+  {
+    dataField: 'nombre', 
+    text: 'Nombre'
+  }, 
+  {
+    dataField: 'cantidad', 
+    text: 'Cantidad'
+  }, 
+  {
+    dataField: 'unidad_medida', 
+    text: 'Unidad de Medida'
+  }, 
+  {
+    dataField: 'fecha', 
+    text: 'Fecha'
+  }];
+  
 let bodyTable = yeison;
 //console.log(bodyTable);
 

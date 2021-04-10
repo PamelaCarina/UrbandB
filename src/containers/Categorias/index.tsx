@@ -7,7 +7,7 @@ import MyFooter from '../../components/Footer';
 import yeisoncategorias from '../../categorias.json';
 
   let menuNav = [{name: "Menú", rute: "/menu"}, {name: "Áreas", rute: "/areas"}, {name:"Cerrar Sesión", rute:"/login"}];
-  let headTable = [{name: "Categorías", rute: "h1"}];
+  let headTable = [{dataField: 'categorias', text: 'Categorías'}];
   let bodyTable3 = yeisoncategorias;
 
 const Categorias = () => {

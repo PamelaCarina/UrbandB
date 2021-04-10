@@ -1,13 +1,15 @@
-import React, {FC} from 'react';
-import Button from 'react-bootstrap/esm/Button';
+import React, {FC, Component} from 'react';
 //import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Table from 'react-bootstrap/Table';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+// import BootstrapTable from 'react-bootstrap-table-next';
+import BootstrapTable from 'react-bootstrap-table-next';
+import paginationFactory from 'react-bootstrap-table2-paginator';
+//import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 
 interface tableArr {
   headArr: {
-    name: string;
-    rute: string;
+    dataField: string;
+    text: string;
   }[];
 
   bodyArrItems ? : {
@@ -26,85 +28,125 @@ interface tableArr {
     multiplicador: number;
   }[];
 
-  bodyArrAreas ?: {
+  bodyArrAreas ? : {
     areas: string;
   }[];
 
-  bodyArrCategorias ?: {
+  bodyArrCategorias ? : {
     categorias: string;
   }[];
 }
 
 const MyTable: FC<tableArr> = ({headArr, bodyArrItems, bodyArrAreas, bodyArrCategorias, bodyArrNewItems}) => {
-  let filas;
+  let columns =[];
+  let rows=[];
   if(bodyArrItems){
-    filas = bodyArrItems.map((elem)=>{
-                return(
-                    <tr>
-                      <td> {elem.id} </td>
-                      <td> {elem.nombre} </td>
-                      <td> {elem.cantidad} </td>
-                      <td> {elem.unidad_medida} </td>
-                      <td> {elem.fecha} </td>
-                      <td> {elem.stock} </td>
-                    </tr>
-                )
-              })
-  }
-  else if(bodyArrNewItems){
-    filas = bodyArrNewItems.map((elem)=>{
-              return(
-                  <tr>
-                    <td> {elem.nombre} </td>
-                    <td> {elem.unidad_medida} </td>
-                    <td> {elem.critico} </td>
-                    <td> {elem.multiplicador} </td>
-                  </tr>
-              )
-            })
+      columns= headArr
+      rows=bodyArrItems
   }
   else if(bodyArrAreas){
-    filas = bodyArrAreas.map((elem)=>{
-              return(
-                  <tr>
-                    <td> {elem.areas} </td>
-                    <td>
-                      <Button as={Link} to="/categorias"> Revisar </Button>
-                    </td>
-                  </tr>
-              )
-            })
+      columns= headArr
+      rows=bodyArrAreas 
   }
   else if(bodyArrCategorias){
-    filas = bodyArrCategorias.map((elem)=>{
-              return(
-                  <tr>
-                    <td> {elem.categorias} </td>
-                    <td>
-                      <Button as={Link} to="/items"> Revisar </Button>
-                    </td>
-                  </tr>
-              )
-            })
+      columns= headArr
+      rows=bodyArrCategorias    
   }
-  return(
-    <div>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            {headArr.map((elem)=>{
-              return(
-                <th key={"#" + elem.rute}> {elem.name}</th>
-              )
-            })}
-          </tr>
-        </thead>
-        <tbody>
-            {filas}
-        </tbody>
-      </Table>
-    </div>
+  else if(bodyArrNewItems){
+      columns= headArr
+      rows=bodyArrNewItems
+  }
+
+  return (
+    
+    <BootstrapTable 
+      keyField='id' 
+      data={ rows } 
+      columns={ columns } 
+      pagination={ paginationFactory() }
+    />
   );
-};
+}
+  
+    
+{/* // ========================================================
+    
+      // let products;
+      // if(bodyArrItems){
+      //   products = bodyArrItems.map((elem)=>{
+      //     return(
+      //       <tr>
+      //         <td> {elem.id} </td>
+      //         <td> {elem.nombre} </td>
+      //         <td> {elem.cantidad} </td>
+      //         <td> {elem.unidad_medida} </td>
+      //         <td> {elem.fecha} </td>
+      //         <td> {elem.stock} </td>
+      //       </tr>
+      //     )
+      //   })
+      // }
+      // else if(bodyArrNewItems){
+      //   products = bodyArrNewItems.map((elem)=>{
+      //     return(
+      //       <tr>
+      //         <td> {elem.nombre} </td>
+      //         <td> {elem.unidad_medida} </td>
+      //         <td> {elem.critico} </td>
+      //         <td> {elem.multiplicador} </td>
+      //       </tr>
+      //     )
+      //   })
+      // }
+      // else if(bodyArrAreas){
+      //   products = bodyArrAreas.map((elem)=>{
+      //     return(
+      //       <tr>
+      //         <td> {elem.areas} </td>
+      //         <td>
+      //           <Button as={Link} to="/categorias"> Revisar </Button>
+      //         </td>
+      //       </tr>
+      //     )
+      //   })
+      // }
+      // else if(bodyArrCategorias){
+      //   products = bodyArrCategorias.map((elem)=>{
+      //     return(
+      //       <tr>
+      //         <td> {elem.categorias} </td>
+      //         <td>
+      //           <Button as={Link} to="/items"> Revisar </Button>
+      //         </td>
+      //       </tr>
+      //     )
+      //   })
+      // }
+
+      // let columns = headArr.map((elem)=>{
+      //   return(
+      //     <th key={"#" + elem.rute}> {elem.name}</th>
+      //   )
+      // });
+
+      // return(
+      //   <div>
+      //   <Table striped bordered hover>
+      //     <thead>
+      //       <tr>
+      //         {headArr.map((elem)=>{
+      //           return(
+      //             <th key={"#" + elem.rute}> {elem.name}</th>
+      //           )
+      //         })}
+      //       </tr>
+      //     </thead>
+      //     <tbody>
+      //         {products}
+      //     </tbody>
+      //   </Table>
+      // </div>
+      // ) */}
+
 
 export default MyTable;

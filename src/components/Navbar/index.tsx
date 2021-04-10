@@ -11,8 +11,6 @@ interface MenuNav {
 }
 
 const MyNavbar: FC<MenuNav> = ({ menuArr }) => {
-  console.log(menuArr);
-
   return (
     <div>
       <Navbar bg="dark" variant="dark" fixed="top">

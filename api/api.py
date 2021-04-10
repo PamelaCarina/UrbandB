@@ -1,10 +1,6 @@
 import os
 import json
 from flask import Flask,jsonify,request
-<<<<<<< HEAD
-=======
-from flaskext.mysql import MySQL
->>>>>>> backend
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -87,11 +83,7 @@ def lista_items():
     items = Items.query.order_by(Items.id).all()
 
     return jsonify({
-<<<<<<< HEAD
         "item": [{"id": x.id, "nombre": x.nombre, "unidad_medida": x.unidad_medida, "id_categoria": x.id_categoria , "tipo_user": x.tipo_user, "critico": x.critico, "fecha": x.timestamp} for x in items]
-=======
-        "item": [{"id": x.id, "nombre": x.nombre, "unidad_medida": x.unidad_medida, "id_categoria": x.id_categoria , "tipo_user": x.tipo_user, "critico": x.critico} for x in items]
->>>>>>> backend
     })
 
 @app.route('/api/login',methods=['POST'])
