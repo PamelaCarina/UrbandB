@@ -116,6 +116,12 @@ def login():
     ret = {'access_token': guard.encode_jwt_token(user)}
     return ret, 200
 
+@app.route('/api/delete/<id>',methods=['DELETE'])
+def borrar_item(id):
+    item = Items.query.get_or_404(id)
+    item.deleted = True
+    db.session.commit()
+    return '',204
 
 
 if __name__ == '__main__':
