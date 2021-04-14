@@ -7,13 +7,15 @@ import axios from 'axios';
 
 interface props {
   handleAddItems: (item) => void;
+  handleDeleteItems: (item) => void;
 }
 
 // ingProd.tsx state = [item1, item2]
 // setNewitems([item1, item2, item3])
 // state = [item1, item2, item3]
 
-const MyForm: FC<props> = ({ handleAddItems }) => {
+const MyForm: FC<props> = ({ handleAddItems, handleDeleteItems}) => {
+  const [id, setID] = useState("");
   const [name, setName] = useState("");
   const [unidadMedida, setUnidadMedida] = useState("");
   const [critico, setCritico] = useState("");
@@ -29,15 +31,27 @@ const MyForm: FC<props> = ({ handleAddItems }) => {
       multiplicador: multiplicador
     }
     handleAddItems(data);
-
     axios.post('http://127.0.0.1:5000/api/items/insert', {data} )
     .then(res => {
-        console.log(res);
-      })
+      console.log(res);
+    })
   }
+  const deleteData = (e) => {
+    e.preventDefault();
+    const data ={
+      id: id,
+    }
+    handleDeleteItems(data);
+    axios.delete(`http://127.0.0.1:5000/api/delete/${data.id}`, {data} )
+    .then(res => {
+      console.log(res);
+    })
+  }
+
 
   return(
     <div>
+      <h1>AGREGAR PRODUCTO</h1>
       <Form onSubmit = {handleSubmit}>
         <Form.Row>
           <Form.Group as={Col} controlId="nombre">
@@ -90,6 +104,24 @@ const MyForm: FC<props> = ({ handleAddItems }) => {
 
         <Button variant="primary" type="submit">
           Ingresar
+        </Button>
+      </Form>
+
+      <h1>ELIMINAR PRODUCTO</h1>
+      <Form onSubmit = {deleteData}>
+
+        <Form.Row>
+          <Form.Group as={Col} controlId="id">
+            <Form.Label>Código</Form.Label>
+            <Form.Control
+              value={id}
+              onChange={(e) => setID(e.target.value)}
+            />
+          </Form.Group>
+
+        </Form.Row>
+        <Button variant="primary" type="submit">
+          Retirar
         </Button>
       </Form>
     </div>

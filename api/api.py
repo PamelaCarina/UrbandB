@@ -1,6 +1,6 @@
 import os
 import json
-from flask import Flask,jsonify,request
+from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 app = Flask(__name__)
@@ -112,6 +112,13 @@ def login():
     ret = {'access_token': guard.encode_jwt_token(user)}
     return ret, 200
 
+@app.route('/api/delete/<id>',methods=['DELETE'])
+def borrar_item(id):
+    item = Items.query.get_or_404(id)
+    db.session.delete(item)
+
+    db.session.commit()
+    return 'item borrado',204
 
 
 if __name__ == '__main__':

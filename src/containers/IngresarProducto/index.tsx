@@ -38,6 +38,11 @@ const IngresarProducto = () => {
     aux.push(item);
     setnewItems(aux);
   };
+  const handleDeleteItems = (item) => {
+    let aux = [...newItems];
+    aux.pop(item);
+    setnewItems(aux);
+  };
 
   return (
     <div>
@@ -45,7 +50,7 @@ const IngresarProducto = () => {
         <MyNavbar menuArr={menuNav}> </MyNavbar>
       </div>
       <div className="IngresarProducto">
-        <MyForm handleAddItems={handleAddItems}></MyForm>
+        <MyForm handleAddItems={handleAddItems} handleDeleteItems={handleDeleteItems}></MyForm>
 
         <MyTable headArr={headTable} bodyArrNewItems={newItems}></MyTable>
       </div>

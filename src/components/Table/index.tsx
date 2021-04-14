@@ -5,6 +5,7 @@ import React, {FC, Component} from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 //import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
+// import Button from 'react-bootstrap/Button';
 
 interface tableArr {
   headArr: {
