@@ -119,9 +119,10 @@ def login():
 @app.route('/api/delete/<id>',methods=['DELETE'])
 def borrar_item(id):
     item = Items.query.get_or_404(id)
-    item.deleted = True
+    db.session.delete(item)
+
     db.session.commit()
-    return '',204
+    return 'item borrado',204
 
 
 if __name__ == '__main__':
