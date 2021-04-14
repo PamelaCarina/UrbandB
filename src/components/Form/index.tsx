@@ -30,11 +30,10 @@ const MyForm: FC<props> = ({ handleAddItems }) => {
     }
     handleAddItems(data);
 
-    // axios.post('http://127.0.0.1:5000/api/items/insert', {data} )
-    // .then(res => {
-    //     console.log(res);
-    //     // console.log(res.data);
-    //   })
+    axios.post('http://127.0.0.1:5000/api/items/insert', {data} )
+    .then(res => {
+        console.log(res);
+      })
   }
 
   return(
