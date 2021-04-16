@@ -52,8 +52,6 @@ class User(db.Model):
 def home():
     return {'work': 200}
 
-@app.route
-
 @app.route('/api/items/insert',endpoint="nuevo_item",methods= ['POST'])
 def ingresar_items():
     json = request.get_json()
@@ -64,27 +62,26 @@ def ingresar_items():
     # id_categoria = json.get('id_categoria')
     # tipo_user = json.get('tipo_user')
     critico = json.get('critico')
-    multiplicador = json.get('multiplicador')
+    cantidad = json.get('cantidad')
 
-    for i in range(int(multiplicador)):
-      new_item = Items()
-      new_item.nombre = nombre
-      new_item.unidad_medida = unidad_medida
-      new_item.id_categoria = 1
-      new_item.tipo_user = 1
-      new_item.critico = critico
-      db.session.add(new_item)
-      db.session.commit()
+    new_item = Items()
+    new_item.nombre = nombre
+    new_item.unidad_medida = unidad_medida
+    new_item.id_categoria = 1
+    new_item.tipo_user = 1
+    new_item.critico = critico
+    new_item.cantidad = cantidad
+    db.session.add(new_item)
+    db.session.commit()
 
     return jsonify({"id": new_item.id }), 201
-
 
 @app.route('/api/items/lista',endpoint='lista_items', methods=['GET'])
 def lista_items():
     items = Items.query.order_by(Items.id).all()
 
     return jsonify({
-        "item": [{"id": x.id, "nombre": x.nombre, "unidad_medida": x.unidad_medida, "id_categoria": x.id_categoria , "tipo_user": x.tipo_user, "critico": x.critico, "fecha": x.timestamp} for x in items]
+        "item": [{"id": x.id, "nombre": x.nombre, "unidad_medida": x.unidad_medida, "id_categoria": x.id_categoria , "tipo_user": x.tipo_user, "critico": x.critico, "cantidad": x.cantidad, "fecha": x.timestamp} for x in items]
     })
 
 @app.route('/api/areas/lista', endpoint='lista_areas', methods = ['GET'])
@@ -119,7 +116,6 @@ def borrar_item(id):
 
     db.session.commit()
     return 'item borrado',204
-
 
 if __name__ == '__main__':
     db.create_all()

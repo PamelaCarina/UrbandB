@@ -1,17 +1,16 @@
-import React, {FC, Component} from 'react';
+import React, {FC, Component, useEffect, useState} from 'react';
 //import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-// import { Link } from 'react-router-dom';
 // import BootstrapTable from 'react-bootstrap-table-next';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 //import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
-// import Button from 'react-bootstrap/Button';
 
 interface tableArr {
   headArr: {
     dataField: string;
     text: string;
-  }[];
+    // formatter ? : () => void;
+  }[]; //aca me va a llegar el formatter: (ID QUE QUIERO)
 
   bodyArrItems ? : {
     id: number;
@@ -38,7 +37,6 @@ interface tableArr {
     categorias: string;
   }[];
 }
-
 const MyTable: FC<tableArr> = ({headArr, bodyArrItems, bodyArrAreas, bodyArrCategorias, bodyArrNewItems}) => {
   let columns =[];
   let rows=[];
@@ -47,8 +45,9 @@ const MyTable: FC<tableArr> = ({headArr, bodyArrItems, bodyArrAreas, bodyArrCate
       rows=bodyArrItems
   }
   else if(bodyArrAreas){
-      columns= headArr
-      rows=bodyArrAreas 
+    columns= headArr
+    console.log(columns);
+    rows=bodyArrAreas
   }
   else if(bodyArrCategorias){
       columns= headArr
@@ -60,12 +59,14 @@ const MyTable: FC<tableArr> = ({headArr, bodyArrItems, bodyArrAreas, bodyArrCate
   }
 
   return (
-    
     <BootstrapTable 
       keyField='id' 
       data={ rows } 
       columns={ columns } 
       pagination={ paginationFactory() }
+      striped
+      hover
+      condensed
     />
   );
 }

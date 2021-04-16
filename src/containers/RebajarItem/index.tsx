@@ -26,33 +26,35 @@ let headTable = [
     text: 'Stock Crítico'
   }];
 
-const getNewitems = () => {
-  return axios.get('http://127.0.0.1:5000/api/items/lista')
-  .then(res => res.data.item) //sin conchetes retorna al tiro
-}
+// const getNewitems = () => {
+//   return axios.get('http://127.0.0.1:5000/api/items/lista')
+//   .then(res => res.data.item) //sin conchetes retorna al tiro
+// }
 
 const IngresarProducto = () => {
-  const [newItems, setnewItems] = useState([]);
-  const handleAddItems = (item) => {
-    let aux = [...newItems];
-    aux.push(item);
-    setnewItems(aux);
-  };
-  const handleDeleteItems = (item) => {
-    let aux = [...newItems];
-    aux.pop(item);
-    setnewItems(aux);
-  };
+    const [items, setItems] = useState([]);
+    useEffect(()=>{
+      axios.get('http://127.0.0.1:5000/api/items/lista')
+      .then(res => {
+        console.log(res);
+        setItems(res.data.item)
+      })
+    },[])
 
+    const handleDeleteItems = (item) => {
+        let aux = [...Items];
+        aux.pop(item);
+        setItems(aux);
+      };
   return (
     <div>
       <div className="IngresarProducto">
         <MyNavbar menuArr={menuNav}> </MyNavbar>
       </div>
       <div className="IngresarProducto">
-        <MyForm handleAddItems={handleAddItems} handleDeleteItems={handleDeleteItems}></MyForm>
+        <MyForm handleDeleteItems={handleDeleteItems}></MyForm>
 
-        <MyTable headArr={headTable} bodyArrNewItems={newItems}></MyTable>
+        <MyTable headArr={headTable} bodyArrItems={items}></MyTable>
       </div>
       <div className="IngresarProducto">
         <MyFooter></MyFooter>
