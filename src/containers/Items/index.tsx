@@ -40,15 +40,15 @@ const Items = () => {
   },[])
   return (
     <div>
-      <div className="Items">
+      {/* <div className="Items">
         <MyNavbar menuArr={menuNav}></MyNavbar>
-      </div>
+      </div> */}
       <div className="Items">
         <MyTable headArr={headTable} bodyArrItems={items}></MyTable>
       </div>
-      <div className="Items">
+      {/* <div className="Items">
         <MyFooter></MyFooter>
-      </div>
+      </div> */}
     </div>
   );
 };
