@@ -1,24 +1,50 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 //import { useHistory } from 'react-router-dom';
 //import '../App.global.css';
 import MyTable from '../../components/Table';
 import MyNavbar from '../../components/Navbar';
 import MyFooter from '../../components/Footer';
-import yeison from '../../items.json';
 
 let menuNav = [{name: "Menú", rute: "/menu"}, {name: "Áreas", rute: "/areas"}, {name:"Cerrar Sesión", rute:"/login"}];
-let headTable = [{name: "ID", rute: "h1"}, {name: "Nombre", rute: "h2"}, {name: "Cantidad", rute: "h3"}, {name: "Unidad de Medida", rute: "h4"}, {name: "Fecha", rute: "h5"}, {name: " ", rute: "h6"}];
-let bodyTable = yeison;
-//console.log(bodyTable);
-
+let headTable = [
+  {
+    dataField: 'id', 
+    text: 'Código'
+  }, 
+  {
+    dataField: 'nombre', 
+    text: 'Nombre'
+  }, 
+  {
+    dataField: 'cantidad', 
+    text: 'Cantidad'
+  }, 
+  {
+    dataField: 'unidad_medida', 
+    text: 'Unidad de Medida'
+  }, 
+  {
+    dataField: 'fecha', 
+    text: 'Fecha'
+  }];
+  
 const Items = () => {
+  const [items, setItems] = useState([]);
+  useEffect(()=>{
+    axios.get('http://127.0.0.1:5000/api/items/lista')
+    .then(res => {
+      console.log(res);
+      setItems(res.data.item)
+    })
+  },[])
   return (
     <div>
       <div className="Items">
         <MyNavbar menuArr={menuNav}></MyNavbar>
       </div>
       <div className="Items">
-        <MyTable headArr={headTable} bodyArrItems={bodyTable}></MyTable>
+        <MyTable headArr={headTable} bodyArrItems={items}></MyTable>
       </div>
       <div className="Items">
         <MyFooter></MyFooter>

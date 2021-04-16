@@ -52,9 +52,7 @@ class User(db.Model):
 def home():
     return {'work': 200}
 
-@app.route
 
-@app.route('/api/items/insert',endpoint="nuevo_item",methods= ['POST'])
 def ingresar_items():
     json = request.get_json()
     json = json.get('data')
@@ -79,9 +77,17 @@ def ingresar_items():
     return jsonify({"id": new_item.id }), 201
 
 
-
-
-
+@app.route('/api/items/insert', endpoint="nuevo_item", methods=['POST'])
+def agregar_item():
+  json = request.get_json()
+  cantidad = json.get('cantidad')
+  exist = db.session.query(User.id).scalar()
+  if exist is not None:
+    db.session().query.update({Items.cantidad : Items.cantidad + cantidad})
+    db.session.commit()
+  else:
+    ingresar_items()
+  return 'agregado'
 
 @app.route('/api/items/lista',endpoint='lista_items', methods=['GET'])
 def lista_items():

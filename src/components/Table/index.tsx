@@ -23,7 +23,7 @@ interface tableArr {
     nombre: string;
     unidad_medida: number;
     critico: string;
-    multiplicador: number;
+    cantidad: number;
   }[];
 
   bodyArrAreas ?: {

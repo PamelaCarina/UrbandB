@@ -20,7 +20,7 @@ export default function App() {
         <Route path="/categorias" component={Categorias} />
         <Route path="/ingresar-producto" component={IngresarProducto} />
         {/* <Route path="/nuevo-producto" component={NuevoProducto} /> */}
-        <Route path="/" component={Menu} />
+        <Route path="/" component={IngresarProducto} />
       </Switch>
     </Router>
   );

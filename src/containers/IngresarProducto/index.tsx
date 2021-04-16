@@ -8,7 +8,23 @@ import MyForm from '../../components/Form';
 import MyFooter from '../../components/Footer';
 
 let menuNav = [{name:"Menú", rute: "/menu"}, {name: "Cerrar sesión", rute: "/login"}];
-let headTable = [{name: "Nombre", rute: "h1"}, {name: "Unidad de Medida", rute: "h2"}, {name: "Cantidad", rute: "h3"}, {name: "Crítico", rute: "h4"}];
+let headTable = [
+  {
+    dataField: 'nombre', 
+    text: 'Nombre'
+  }, 
+  {
+    dataField: 'unidad_medida', 
+    text: 'Unidad de Medida'
+  }, 
+  {
+    dataField: 'cantidad', 
+    text: 'Cantidad'
+  }, 
+  {
+    dataField: 'critico', 
+    text: 'Stock Crítico'
+  }];
 
 const getNewitems = () => {
   return axios.get('http://127.0.0.1:5000/api/items/lista')
@@ -22,6 +38,11 @@ const IngresarProducto = () => {
     aux.push(item);
     setnewItems(aux);
   };
+  const handleDeleteItems = (item) => {
+    let aux = [...newItems];
+    aux.pop(item);
+    setnewItems(aux);
+  };
 
   return (
     <div>
@@ -29,7 +50,7 @@ const IngresarProducto = () => {
         <MyNavbar menuArr={menuNav}> </MyNavbar>
       </div>
       <div className="IngresarProducto">
-        <MyForm handleAddItems={handleAddItems}></MyForm>
+        <MyForm handleAddItems={handleAddItems} handleDeleteItems={handleDeleteItems}></MyForm>
 
         <MyTable headArr={headTable} bodyArrNewItems={newItems}></MyTable>
       </div>
