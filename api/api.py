@@ -64,17 +64,17 @@ def ingresar_items():
     # id_categoria = json.get('id_categoria')
     # tipo_user = json.get('tipo_user')
     critico = json.get('critico')
-    multiplicador = json.get('multiplicador')
+    cantidad = json.get('cantidad')
 
-    for i in range(int(multiplicador)):
-      new_item = Items()
-      new_item.nombre = nombre
-      new_item.unidad_medida = unidad_medida
-      new_item.id_categoria = 1
-      new_item.tipo_user = 1
-      new_item.critico = critico
-      db.session.add(new_item)
-      db.session.commit()
+    new_item = Items()
+    new_item.nombre = nombre
+    new_item.unidad_medida = unidad_medida
+    new_item.id_categoria = 1
+    new_item.tipo_user = 1
+    new_item.critico = critico
+    new_item.cantidad = cantidad
+    db.session.add(new_item)
+    db.session.commit()
 
     return jsonify({"id": new_item.id }), 201
 
