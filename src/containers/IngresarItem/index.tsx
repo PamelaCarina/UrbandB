@@ -10,6 +10,18 @@ import MyFooter from '../../components/Footer';
 let menuNav = [{name:"Menú", rute: "/menu"}, {name: "Cerrar sesión", rute: "/login"}];
 let headTable = [
   {
+    dataField: 'codigo', 
+    text: 'Código'
+  }, 
+  // {
+  //   dataField: 'Categoría', 
+  //   text: 'categoria'
+  // }, 
+  // {
+  //   dataField: 'area', 
+  //   text: 'Área'
+  // }, 
+  {
     dataField: 'nombre', 
     text: 'Nombre'
   }, 
@@ -24,7 +36,12 @@ let headTable = [
   {
     dataField: 'critico', 
     text: 'Stock Crítico'
-  }];
+  },
+  {
+    dataField: 'fecha', 
+    text: 'Fecha'
+  }, 
+];
 
 // const getNewitems = () => {
 //   return axios.get('http://127.0.0.1:5000/api/items/lista')

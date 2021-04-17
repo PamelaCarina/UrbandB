@@ -9,11 +9,10 @@ interface tableArr {
   headArr: {
     dataField: string;
     text: string;
-    // formatter ? : () => void;
   }[]; //aca me va a llegar el formatter: (ID QUE QUIERO)
 
   bodyArrItems ? : {
-    id: number;
+    codigo: string;
     nombre: string;
     cantidad: number;
     unidad_medida: number;
@@ -22,10 +21,11 @@ interface tableArr {
   }[];
 
   bodyArrNewItems ? : {
+    codigo: string;
     nombre: string;
     unidad_medida: number;
     critico: string;
-    multiplicador: number;
+    cantidad: number;
   }[];
 
   bodyArrAreas ? : {

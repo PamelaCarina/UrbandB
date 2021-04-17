@@ -30,12 +30,14 @@ class Items(db.Model):
     __tablename__ = 'items'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    codigo = db.Column(db.String(80),nullable=True)
     nombre = db.Column(db.String(80), nullable=False)
     unidad_medida = db.Column(db.String(80), nullable=False)
     id_categoria = db.Column(db.Integer, db.ForeignKey('categorias.id'))
     # categoria = db.relationship('Categorias', back_populates="items")
     tipo_user = db.Column(db.String(120), nullable=False)
     critico = db.Column(db.Integer, nullable=True)
+    cantidad = db.Column(db.Integer, nullable=True)
     timestamp = db.Column(
         db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -52,36 +54,56 @@ class User(db.Model):
 def home():
     return {'work': 200}
 
-@app.route('/api/items/insert',endpoint="nuevo_item",methods= ['POST'])
+
+@app.route('/api/items/insert', endpoint="nuevo_item", methods=['POST'])
 def ingresar_items():
     json = request.get_json()
     json = json.get('data')
     print(json)
+    codigo = json.get('codigo')
     nombre = json.get('nombre')
     unidad_medida = json.get('unidad_medida')
     # id_categoria = json.get('id_categoria')
     # tipo_user = json.get('tipo_user')
     critico = json.get('critico')
     cantidad = json.get('cantidad')
-
-    new_item = Items()
-    new_item.nombre = nombre
-    new_item.unidad_medida = unidad_medida
-    new_item.id_categoria = 1
-    new_item.tipo_user = 1
-    new_item.critico = critico
-    new_item.cantidad = cantidad
-    db.session.add(new_item)
+    exist = db.session.query(db.exist().where(Items.codigo == codigo)).scalar()
+    if exist:
+      db.session().query.update({Items.cantidad : Items.cantidad + cantidad})
+    else:
+      new_item = Items()
+      new_item.codigo = codigo
+      new_item.nombre = nombre
+      new_item.unidad_medida = unidad_medida
+      new_item.id_categoria = 1
+      new_item.tipo_user = 1
+      new_item.critico = critico
+      new_item.cantidad = cantidad
+      db.session.add(new_item)
     db.session.commit()
 
     return jsonify({"id": new_item.id }), 201
+
+
+
+# def agregar_item():
+#   json = request.get_json()
+#   codigo = json.get('codigo')
+#   cantidad = json.get('cantidad')
+#   exist = db.session.query(db.exist().where(Items.codigo == codigo)).scalar()
+#   if exist is not None:
+#     db.session().query.update({Items.cantidad : Items.cantidad + cantidad})
+#     db.session.commit()
+#   else:
+#     ingresar_items()
+#   return 'agregado'
 
 @app.route('/api/items/lista',endpoint='lista_items', methods=['GET'])
 def lista_items():
     items = Items.query.order_by(Items.id).all()
 
     return jsonify({
-        "item": [{"id": x.id, "nombre": x.nombre, "unidad_medida": x.unidad_medida, "id_categoria": x.id_categoria , "tipo_user": x.tipo_user, "critico": x.critico, "cantidad": x.cantidad, "fecha": x.timestamp} for x in items]
+        "item": [{"id": x.id, "codigo": x.codigo, "nombre": x.nombre, "unidad_medida": x.unidad_medida, "id_categoria": x.id_categoria , "tipo_user": x.tipo_user, "critico": x.critico, "cantidad": x.cantidad, "fecha": x.timestamp} for x in items]
     })
 
 @app.route('/api/areas/lista', endpoint='lista_areas', methods = ['GET'])
@@ -109,13 +131,18 @@ def login():
     ret = {'access_token': guard.encode_jwt_token(user)}
     return ret, 200
 
-@app.route('/api/delete/<id>',methods=['DELETE'])
-def borrar_item(id):
-    item = Items.query.get_or_404(id)
-    db.session.delete(item)
-
+@app.route('/api/retirar/items',methods=['UPDATE'])
+def retirar_item():
+    json = request.get_json()
+    codigo = json.get('codigo')
+    cantidad = json.get('cantidad')
+    exist = db.session.query(db.exist().where(Items.codigo == codigo)).scalar()
+    if exist:
+      retiro = db.session().query.update({Items.cantidad: Items.cantidad - cantidad})
+      retiro.returning(Items.codigo, Items.nombre,
+                       Items.unidad_medida, Items.critico, Items.cantidad, Items.timestamp)
     db.session.commit()
-    return 'item borrado',204
+    return 'items retirado', 204
 
 if __name__ == '__main__':
     db.create_all()

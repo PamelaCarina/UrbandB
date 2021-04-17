@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-//import { useHistory } from 'react-router-dom';
 //import '../App.global.css';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
@@ -59,8 +58,6 @@ const Areas = () =>  {
       let auxCategorias = res.data.categoria;
       return(auxCategorias);
     })
-
-
   },[])
 
   return (

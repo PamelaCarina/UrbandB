@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 //import { useHistory } from 'react-router-dom';
 //import '../App.global.css';
 import MyTable from '../../components/Table';
@@ -7,7 +9,22 @@ import MyNavbar from '../../components/Navbar';
 import MyFooter from '../../components/Footer';
 
   let menuNav = [{name: "Menú", rute: "/menu"}, {name: "Áreas", rute: "/areas"}, {name:"Cerrar Sesión", rute:"/login"}];
-  let headTable = [{dataField: 'nombre', text: 'Categorías'}];
+  let headTable = [
+    {
+      dataField: 'nombre',
+      text: 'Categorías'
+    },
+    {
+      text: 'Revisar',
+      formatter: (cell, row) => revisar(),
+    },
+  ];
+
+  let revisar = () => {
+    return(
+      <Button as={Link} to="/items"> Revisar </Button>
+    )
+  }
 
 const Categorias = () => {
   const [categorias, setCategorias] = useState([]);
