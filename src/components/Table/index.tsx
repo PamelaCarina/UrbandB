@@ -12,6 +12,7 @@ interface tableArr {
   }[]; //aca me va a llegar el formatter: (ID QUE QUIERO)
 
   bodyArrItems ? : {
+    id: number;
     codigo: string;
     nombre: string;
     cantidad: number;
@@ -21,11 +22,13 @@ interface tableArr {
   }[];
 
   bodyArrNewItems ? : {
+    id: number;
     codigo: string;
     nombre: string;
     unidad_medida: number;
     critico: string;
     cantidad: number;
+    id_categoria: number;
   }[];
 
   bodyArrAreas ? : {
@@ -34,6 +37,7 @@ interface tableArr {
   }[];
 
   bodyArrCategorias ? : {
+    id_area: number;
     categorias: string;
   }[];
 }

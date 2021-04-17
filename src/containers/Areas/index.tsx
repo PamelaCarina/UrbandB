@@ -7,15 +7,20 @@ import MyTable from '../../components/Table';
 import MyNavbar from '../../components/Navbar';
 import MyFooter from '../../components/Footer';
 
-
-// const getIdCategoria = () => {
-//   return axios.get('http://127.0.0.1:5000/api/categorias/lista')
-//   .then(res => {
-//     let aux = res.data.categoria.id_areas 
-//     return aux;
-//   })
-// }
-// getIdCategoria();
+// let getLoading = async () => {
+//   return axios
+//     .get(
+//       `/api/seguimientos/loading/${this.props.projectId}/${this.state.projects[0].tracking_time}`,
+//       post_config
+//     )
+//     .then((res) => {
+//       console.log(res.data.progress);
+//       this.setState({ progress: res.data.progress });
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
 
 let menuNav = [
   {
