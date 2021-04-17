@@ -3,6 +3,7 @@ import json
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from sqlalchemy.sql import exists
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -67,8 +68,8 @@ def ingresar_items():
     # tipo_user = json.get('tipo_user')
     critico = json.get('critico')
     cantidad = json.get('cantidad')
-    exist = db.session.query(db.exist().where(Items.codigo == codigo)).scalar()
-    if exist:
+    exists = db.session.query(db.exists().where(Items.codigo == codigo)).scalar()
+    if exists:
       db.session().query.update({Items.cantidad : Items.cantidad + cantidad})
     else:
       new_item = Items()
@@ -136,8 +137,8 @@ def retirar_item():
     json = request.get_json()
     codigo = json.get('codigo')
     cantidad = json.get('cantidad')
-    exist = db.session.query(db.exist().where(Items.codigo == codigo)).scalar()
-    if exist:
+    exists = db.session.query(db.exists().where(Items.codigo == codigo)).scalar()
+    if exists:
       retiro = db.session().query.update({Items.cantidad: Items.cantidad - cantidad})
       retiro.returning(Items.codigo, Items.nombre,
                        Items.unidad_medida, Items.critico, Items.cantidad, Items.timestamp)

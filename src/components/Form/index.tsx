@@ -7,30 +7,26 @@ import axios from 'axios';
 
 interface props {
   handleAddItems ?: (item) => void;
-  handleDeleteItems ?: (item) => void;
+  // handleDeleteItems ?: (item) => void;
 }
 
-// ingProd.tsx state = [item1, item2]
-// setNewitems([item1, item2, item3])
-// state = [item1, item2, item3]
-
-const MyForm: FC<props> = ({ handleAddItems, handleDeleteItems}) => {
-  const [id, setID] = useState("");
+const MyForm: FC<props> = ({ handleAddItems, /*handleRevajarItems*/}) => {
+  const [codigo, setCodigo] = useState("");
   const [name, setName] = useState("");
   const [unidadMedida, setUnidadMedida] = useState("");
   const [critico, setCritico] = useState("");
-  const [multiplicador, setMultiplicador] = useState("");
-  let handle;
+  const [cantidad, setCantidad] = useState("");
 
   if(handleAddItems){
     const handleSubmit = (e) =>{
       e.preventDefault();
       // console.log(name);
       const data = {
+        codigo: codigo,
         nombre: name,
         unidad_medida: unidadMedida,
         critico : critico,
-        multiplicador: multiplicador
+        cantidad: cantidad
       }
       handleAddItems(data);
       axios.post('http://127.0.0.1:5000/api/items/insert', {data} )
@@ -42,6 +38,16 @@ const MyForm: FC<props> = ({ handleAddItems, handleDeleteItems}) => {
       <div>
         <Form onSubmit = {handleSubmit}>
           <Form.Row>
+          <Form.Group as={Col} controlId="codigo">
+              <Form.Label>Código</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ingrese el código del producto"
+                value={codigo}
+                onChange={(e) => setCodigo(e.target.value)}
+              />
+            </Form.Group>
+
             <Form.Group as={Col} controlId="nombre">
               <Form.Label>Nombre</Form.Label>
               <Form.Control
@@ -72,11 +78,11 @@ const MyForm: FC<props> = ({ handleAddItems, handleDeleteItems}) => {
               />
             </Form.Group>
 
-            <Form.Group as={Col} controlId="multiplicador">
+            <Form.Group as={Col} controlId="cantidad">
               <Form.Label>Cantidad de Productos</Form.Label>
               <Form.Control
-                value={multiplicador}
-                onChange={(e) => setMultiplicador(e.target.value)}
+                value={cantidad}
+                onChange={(e) => setCantidad(e.target.value)}
               />
             </Form.Group>
 
@@ -98,115 +104,41 @@ const MyForm: FC<props> = ({ handleAddItems, handleDeleteItems}) => {
     )
   }
 
-  else if(handleDeleteItems){
-    const deleteData = (e) => {
-      e.preventDefault();
-      const data ={
-        id: id,
-      }
-      handleDeleteItems(data);
-      axios.delete(`http://127.0.0.1:5000/api/delete/${data.id}`, {data} )
-      .then(res => {
-        console.log(res);
-      })
-    }
-    return(
-      <div>
-        <h1>RETIRAR PRODUCTO</h1>
-        <Form onSubmit = {deleteData}>
-        <Form.Row>
-          <Form.Group as={Col} controlId="id">
-            <Form.Label>Código</Form.Label>
-            <Form.Control
-              value={id}
-              onChange={(e) => setID(e.target.value)}
-            />
-          </Form.Group>
+  // else if(handleDeleteItems){
+  //   const deleteData = (e) => {
+  //     e.preventDefault();
+  //     const data ={
+  //       id: id,
+  //     }
+  //     handleDeleteItems(data);
+  //     axios.delete(`http://127.0.0.1:5000/api/delete/${data.id}`, {data} )
+  //     .then(res => {
+  //       console.log(res);
+  //     })
+  //   }
+  //   return(
+  //     <div>
+  //       <h1>RETIRAR PRODUCTO</h1>
+  //       <Form onSubmit = {deleteData}>
+  //       <Form.Row>
+  //         <Form.Group as={Col} controlId="id">
+  //           <Form.Label>Código</Form.Label>
+  //           <Form.Control
+  //             value={id}
+  //             onChange={(e) => setID(e.target.value)}
+  //           />
+  //         </Form.Group>
 
-        </Form.Row>
-          <Button variant="primary" type="submit">
-            Retirar
-          </Button>
-        </Form>
-      </div>
-    )
-  }
+  //       </Form.Row>
+  //         <Button variant="primary" type="submit">
+  //           Retirar
+  //         </Button>
+  //       </Form>
+  //     </div>
+  //   )
+  // }
   return(
     <div></div>
-    // <div>
-    //   <Form onSubmit = {handle}>
-    //     <Form.Row>
-    //       <Form.Group as={Col} controlId="nombre">
-    //         <Form.Label>Nombre</Form.Label>
-    //         <Form.Control
-    //           type="text"
-    //           placeholder="Ingrese el nombre del producto"
-    //           value={name}
-    //           onChange={(e) => setName(e.target.value)}
-    //         />
-    //       </Form.Group>
-
-    //       <Form.Group as={Col} controlId="unidad_medida">
-    //         <Form.Label>Unidad de Medida</Form.Label>
-    //         <Form.Control
-    //           type="text"
-    //           placeholder="Ingrese la unidad de medida"
-    //           value={unidadMedida}
-    //           onChange={(e) => setUnidadMedida(e.target.value)}
-    //          />
-    //       </Form.Group>
-    //     </Form.Row>
-
-    //     <Form.Row>
-    //       <Form.Group as={Col} controlId="critico">
-    //         <Form.Label>Stock crítico</Form.Label>
-    //         <Form.Control
-    //           value={critico}
-    //           onChange={(e) => setCritico(e.target.value)}
-    //         />
-    //       </Form.Group>
-
-    //       <Form.Group as={Col} controlId="multiplicador">
-    //         <Form.Label>Cantidad de Productos</Form.Label>
-    //         <Form.Control
-    //           value={multiplicador}
-    //           onChange={(e) => setMultiplicador(e.target.value)}
-    //         />
-    //       </Form.Group>
-
-    //       {/* <Form.Group as={Col} controlId="tipo_user">
-    //         <Form.Label>Tipo de usuario</Form.Label>
-    //         <Form.Control as="select" defaultValue="Choose...">
-    //           <option>Administrador</option>
-    //           <option>Lector</option>
-    //         </Form.Control>
-    //       </Form.Group> */}
-
-    //     </Form.Row>
-
-    //     <Button variant="primary" type="submit">
-    //       Ingresar
-    //     </Button>
-    //   </Form>
-
-      /* <h1>ELIMINAR PRODUCTO</h1>
-      <Form onSubmit = {deleteData}>
-
-        <Form.Row>
-          <Form.Group as={Col} controlId="id">
-            <Form.Label>Código</Form.Label>
-            <Form.Control
-              value={id}
-              onChange={(e) => setID(e.target.value)}
-            />
-          </Form.Group>
-
-        </Form.Row>
-        <Button variant="primary" type="submit">
-          Retirar
-        </Button>
-      </Form>
-    */
   );
 };
 

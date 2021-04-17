@@ -9,7 +9,7 @@ import MyFooter from '../../components/Footer';
 let menuNav = [{name: "Menú", rute: "/menu"}, {name: "Áreas", rute: "/areas"}, {name:"Cerrar Sesión", rute:"/login"}];
 let headTable = [
   {
-    dataField: 'id', 
+    dataField: 'codigo', 
     text: 'Código'
   }, 
   {
