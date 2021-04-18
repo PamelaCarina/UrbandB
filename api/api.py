@@ -68,11 +68,20 @@ def ingresar_items():
     # tipo_user = json.get('tipo_user')
     critico = json.get('critico')
     cantidad = json.get('cantidad')
+    new_item = Items()
     exists = db.session.query(db.exists().where(Items.codigo == codigo)).scalar()
+    print(exists)
     if exists:
-      db.session().query.update({Items.cantidad : Items.cantidad + cantidad})
+      print("DEBUG")
+      # item = db.session.query().filter_by(codigo=codigo).scalar()
+      # print(item)
+      cambio = db.session().query(Items).filter_by(codigo=codigo).update(
+          {Items.cantidad: Items.cantidad + cantidad})
+      print(cambio)
+      db.session.commit()
+      return jsonify({"id": cambio})
+
     else:
-      new_item = Items()
       new_item.codigo = codigo
       new_item.nombre = nombre
       new_item.unidad_medida = unidad_medida
@@ -80,24 +89,12 @@ def ingresar_items():
       new_item.tipo_user = 1
       new_item.critico = critico
       new_item.cantidad = cantidad
+
       db.session.add(new_item)
-    db.session.commit()
+      db.session.commit()
+      # return jsonify({"id": new_item.id})
+      return jsonify({"id": new_item.id}), 201
 
-    return jsonify({"id": new_item.id }), 201
-
-
-
-# def agregar_item():
-#   json = request.get_json()
-#   codigo = json.get('codigo')
-#   cantidad = json.get('cantidad')
-#   exist = db.session.query(db.exist().where(Items.codigo == codigo)).scalar()
-#   if exist is not None:
-#     db.session().query.update({Items.cantidad : Items.cantidad + cantidad})
-#     db.session.commit()
-#   else:
-#     ingresar_items()
-#   return 'agregado'
 
 @app.route('/api/items/lista',endpoint='lista_items', methods=['GET'])
 def lista_items():
@@ -139,11 +136,11 @@ def retirar_item():
     cantidad = json.get('cantidad')
     exists = db.session.query(db.exists().where(Items.codigo == codigo)).scalar()
     if exists:
-      retiro = db.session().query.update({Items.cantidad: Items.cantidad - cantidad})
-      retiro.returning(Items.codigo, Items.nombre,
-                       Items.unidad_medida, Items.critico, Items.cantidad, Items.timestamp)
-    db.session.commit()
-    return 'items retirado', 204
+      cambio = db.session().query(Items).filter_by(codigo=codigo).update(
+          {Items.cantidad: Items.cantidad + cantidad})
+      print(cambio)
+      db.session.commit()
+    return jsonify({"id": cambio})
 
 if __name__ == '__main__':
     db.create_all()
