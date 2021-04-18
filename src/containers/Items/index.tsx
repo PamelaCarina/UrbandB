@@ -29,10 +29,12 @@ let headTable = [
     text: 'Fecha'
   }];
   
-const Items = () => {
+const Items = (match) => {
+  let params = match.params;
   const [items, setItems] = useState([]);
+  console.log(params.id);
   useEffect(()=>{
-    axios.get('http://127.0.0.1:5000/api/items/lista')
+    axios.get(`http://127.0.0.1:5000/api/items/lista/${params.id}`)
     .then(res => {
       console.log(res);
       setItems(res.data.item)

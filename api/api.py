@@ -86,7 +86,6 @@ def ingresar_items():
     return jsonify({"id": new_item.id }), 201
 
 
-
 # def agregar_item():
 #   json = request.get_json()
 #   codigo = json.get('codigo')
@@ -115,7 +114,7 @@ def lista_areas():
       "area": [{"id": x.id, "nombre": x.nombre} for x in areas]
     })
 
-@app.route('/api/categorias/lista', endpoint='lista_categorias', methods= ['GET'])
+@app.route('/api/categorias/lista/', endpoint='lista_categorias', methods= ['GET'])
 def lista_categorias():
     categorias = Categorias.query.order_by(Categorias.id).all()
 

@@ -25,6 +25,6 @@
     "yarn.lock": true,
     "*.{css,sass,scss}.d.ts": true
   },
-  "python.pythonPath": "/usr/local/opt/python@3.9/bin/python3.9",
+  "python.pythonPath": "C:\\Python39\\python.exe",
   "git.ignoreLimitWarning": true
 }

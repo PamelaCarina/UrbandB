@@ -16,7 +16,7 @@ export default function App() {
         <Route path="/login" component={Login} />
         <Route path="/items" component={Items} />
         <Route path="/areas" component={Areas} />
-        <Route path="/categorias" component={Categorias} />
+        <Route path="/categorias/:id" component={Categorias} />
         <Route path="/ingresar-item" component={IngresarItem} />
         <Route path="/rebajar-item" component={RebajarItem} />
         <Route path="/" component={Menu} />
