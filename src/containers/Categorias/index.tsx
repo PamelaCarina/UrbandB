@@ -30,9 +30,9 @@ const Categorias = ({match}) => {
   let params = match.params;
   const [categorias, setCategorias] = useState([]);
   console.log(params.id);
-  
+
   useEffect(()=>{
-    axios.get(`http://127.0.0.1:5000/api/categorias/lista/${params.id}`)
+    axios.get(`http://127.0.0.1:5000/api/lista/categorias/${params.id}`)
     .then(res => {
       console.log(res);
       setCategorias(res.data.categoria)
