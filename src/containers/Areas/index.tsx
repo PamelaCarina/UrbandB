@@ -7,21 +7,6 @@ import MyTable from '../../components/Table';
 import MyNavbar from '../../components/Navbar';
 import MyFooter from '../../components/Footer';
 
-// let getLoading = async () => {
-//   return axios
-//     .get(
-//       `/api/seguimientos/loading/${this.props.projectId}/${this.state.projects[0].tracking_time}`,
-//       post_config
-//     )
-//     .then((res) => {
-//       console.log(res.data.progress);
-//       this.setState({ progress: res.data.progress });
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
-
 let menuNav = [
   {
     name: "Menú",
@@ -39,13 +24,13 @@ let headTable = [
   },
   {
     text: ' botoncito ', 
-    formatter: (cell, row) => revisar(),
+    formatter: (cell, row) => revisar(row.id),
   }
 ];
 
-let revisar = () => {
+let revisar = (id) => {
   return(
-    <Button as={Link} to="/categorias"> Revisar </Button>
+    <Button as={Link} to={`/categorias/${id}`}> Revisar </Button>
   )
 }
 
@@ -55,13 +40,6 @@ const Areas = () =>  {
     axios.get('http://127.0.0.1:5000/api/areas/lista')
     .then(res => {
       setAreas(res.data.area)
-      // let auxAreas = res.data.area;
-      // return (auxAreas);
-    })
-    axios.get('http://127.0.0.1:5000/api/categorias/lista')
-    .then(res => {
-      let auxCategorias = res.data.categoria;
-      return(auxCategorias);
     })
   },[])
 

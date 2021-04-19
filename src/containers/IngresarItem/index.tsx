@@ -56,6 +56,7 @@ const IngresarProducto = () => {
     setnewItems(aux);
   };
 
+
   return (
     <div>
       <div className="IngresarProducto">

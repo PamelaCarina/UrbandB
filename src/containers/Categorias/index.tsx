@@ -1,40 +1,44 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
-import { Link } from 'react-router-dom';
-//import { useHistory } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 //import '../App.global.css';
 import MyTable from '../../components/Table';
 import MyNavbar from '../../components/Navbar';
 import MyFooter from '../../components/Footer';
 
-  let menuNav = [{name: "Menú", rute: "/menu"}, {name: "Áreas", rute: "/areas"}, {name:"Cerrar Sesión", rute:"/login"}];
-  let headTable = [
-    {
-      dataField: 'nombre',
-      text: 'Categorías'
-    },
-    {
-      text: 'Revisar',
-      formatter: (cell, row) => revisar(),
-    },
-  ];
+let menuNav = [{name: "Menú", rute: "/menu"}, {name: "Áreas", rute: "/areas"}, {name:"Cerrar Sesión", rute:"/login"}];
+let headTable = [
+  {
+    dataField: 'nombre',
+    text: 'Categorías'
+  },
+  {
+    text: 'Revisar',
+    formatter: (cell, row) => revisar(row.id),
+  },
+];
 
-  let revisar = () => {
-    return(
-      <Button as={Link} to="/items"> Revisar </Button>
-    )
-  }
+let revisar = (id) => {
+  return(
+    <Button as={Link} to={`/items/${id}`}> Revisar </Button>
+  )
+}
 
-const Categorias = () => {
+const Categorias = ({match}) => {
+  let params = match.params;
   const [categorias, setCategorias] = useState([]);
+  console.log(params.id);
+  
   useEffect(()=>{
-    axios.get('http://127.0.0.1:5000/api/categorias/lista')
+    axios.get(`http://127.0.0.1:5000/api/categorias/lista/${params.id}`)
     .then(res => {
       console.log(res);
       setCategorias(res.data.categoria)
     })
   },[])
+
   return (
     <div>
       <div className="Categorias">

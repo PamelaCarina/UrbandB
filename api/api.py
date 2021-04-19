@@ -98,8 +98,8 @@ def ingresar_items():
 
 
 @app.route('/api/lista/categorias/<id>',endpoint='list_linkeda',methods=['GET'])
-def lista_link_categorias(id_area):
-    categoria = db.session.query(Categorias).filter_by(id_area=id_area).join(Areas).order_by(asc(Areas.nombre))
+def lista_link_categorias(id):
+    categorias = db.session.query(Categorias).filter_by(id_area=id).join(Areas).order_by(asc(Areas.nombre))
 
     return jsonify({
         "categoria": [{"id": x.id, "nombre": x.nombre} for x in categorias]
@@ -121,13 +121,13 @@ def lista_areas():
       "area": [{"id": x.id, "nombre": x.nombre} for x in areas]
     })
 
-@app.route('/api/categorias/lista', endpoint='lista_categorias', methods= ['GET'])
-def lista_categorias():
-    categorias = Categorias.query.order_by(Categorias.id).all()
+# @app.route('/api/categorias/lista/', endpoint='lista_categorias', methods= ['GET'])
+# def lista_categorias():
+#     categorias = Categorias.query.order_by(Categorias.id).all()
 
-    return jsonify({
-      "categoria": [{"id": x.id, "nombre": x.nombre, "id_area": x.id_area} for x in categorias ]
-      })
+#     return jsonify({
+#       "categoria": [{"id": x.id, "nombre": x.nombre, "id_area": x.id_area} for x in categorias ]
+#       })
 
 @app.route('/api/login',methods=['POST'])
 def login():
