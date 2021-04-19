@@ -4,6 +4,7 @@ from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from sqlalchemy.sql import exists
+from sqlalchemy.sql.expression import desc, asc
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -95,6 +96,14 @@ def ingresar_items():
       # return jsonify({"id": new_item.id})
       return jsonify({"id": new_item.id}), 201
 
+
+@app.route('/api/lista/categorias/<id>',endpoint='list_linkeda',methods=['GET'])
+def lista_link_categorias(id_area):
+    categoria = db.session.query(Categorias).filter_by(id_area=id_area).join(Areas).order_by(asc(Areas.nombre))
+
+    return jsonify({
+        "categoria": [{"id": x.id, "nombre": x.nombre} for x in categorias]
+    })
 
 @app.route('/api/items/lista',endpoint='lista_items', methods=['GET'])
 def lista_items():
