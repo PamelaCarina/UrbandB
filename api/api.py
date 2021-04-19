@@ -25,6 +25,7 @@ class Categorias(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(80), unique=True, nullable=False)
     id_area = db.Column(db.Integer, db.ForeignKey('areas.id'))
+    items = db.relationship('Items', backref='categoria')
     # item = db.relationship("Items", back_populates="items")
 
 
@@ -32,7 +33,7 @@ class Items(db.Model):
     __tablename__ = 'items'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    codigo = db.Column(db.String(80),nullable=True)
+    codigo = db.Column(db.String(80),unique=True,nullable=True)
     nombre = db.Column(db.String(80), nullable=False)
     unidad_medida = db.Column(db.String(80), nullable=False)
     id_categoria = db.Column(db.Integer, db.ForeignKey('categorias.id'))
@@ -76,7 +77,7 @@ def ingresar_items():
       print("DEBUG")
       # item = db.session.query().filter_by(codigo=codigo).scalar()
       # print(item)
-      cambio = db.session().query(Items).filter_by(codigo=codigo).update(
+      cambio = db.session().query(Items).filter_by(codigo=codigo,nombre=nombre,unidad_medida=unidad_medida).update(
           {Items.cantidad: Items.cantidad + cantidad})
       print(cambio)
       db.session.commit()
@@ -103,6 +104,14 @@ def lista_link_categorias(id):
 
     return jsonify({
         "categoria": [{"id": x.id, "nombre": x.nombre} for x in categorias]
+    })
+
+@app.route('/api/lista/items/<id>',endpoint='list_linkeda2',methods=['GET'])
+def lista_link_items(id):
+    categorias = db.session.query(Items).filter_by(id_categoria=id).join(Categorias).order_by(asc(Categorias.nombre))
+
+    return jsonify({
+        "item": [{"id": x.id, "codigo": x.codigo, "nombre": x.nombre, "unidad_medida": x.unidad_medida, "id_categoria": x.id_categoria , "tipo_user": x.tipo_user, "critico": x.critico, "cantidad": x.cantidad, "fecha": x.timestamp} for x in items]
     })
 
 @app.route('/api/items/lista',endpoint='lista_items', methods=['GET'])
@@ -138,7 +147,7 @@ def login():
     ret = {'access_token': guard.encode_jwt_token(user)}
     return ret, 200
 
-@app.route('/api/retirar/items',methods=['UPDATE'])
+@app.route('/api/retirar/items',methods=['POST'])
 def retirar_item():
     json = request.get_json()
     codigo = json.get('codigo')
