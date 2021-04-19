@@ -19,7 +19,7 @@ export default function App() {
         <Route path="/categorias/:id" component={Categorias} />
         <Route path="/ingresar-item" component={IngresarItem} />
         <Route path="/rebajar-item" component={RebajarItem} />
-        <Route path="/" component={Menu} />
+        <Route path="/" component={RebajarItem} />
       </Switch>
     </Router>
   );

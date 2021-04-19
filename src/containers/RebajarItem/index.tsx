@@ -44,20 +44,10 @@ let headTable = [
 ];
 
 const IngresarProducto = () => {
-    const [items, setItems] = useState([]);
-    useEffect(()=>{
-      axios.get('http://127.0.0.1:5000/api/items/lista')
-      .then(res => {
-        console.log(res);
-        setItems(res.data.item)
-      })
-    },[])
-
-    const handleDeleteItems = (item) => {
-        let aux = [...Items];
-        aux.pop(item);
-        setItems(aux);
-      };
+  const [items, setItems] = useState([]);
+  const handleRetirarItems = (item) => {
+      setItems(items);
+  };
       
   return (
     <div>
@@ -65,7 +55,7 @@ const IngresarProducto = () => {
         <MyNavbar menuArr={menuNav}> </MyNavbar>
       </div>
       <div className="IngresarProducto">
-        <MyForm handleDeleteItems={handleDeleteItems}></MyForm>
+        <MyForm handleRetirarItems={handleRetirarItems}></MyForm>
 
         <MyTable headArr={headTable} bodyArrItems={items}></MyTable>
       </div>

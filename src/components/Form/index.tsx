@@ -4,13 +4,16 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import MyTable from '../../components/Table';
 
 interface props {
   handleAddItems ?: (item) => void;
-  // handleDeleteItems ?: (item) => void;
+  handleRetirarItems ?: (item) => void;
 }
 
-const MyForm: FC<props> = ({ handleAddItems, /*handleRevajarItems*/}) => {
+//necesito que los datos primero se agreguen a la tabla y después hacer un botón en la tabla de ingresar
+
+const MyForm: FC<props> = ({ handleAddItems, handleRetirarItems}) => {
   const [codigo, setCodigo] = useState("");
   const [name, setName] = useState("");
   const [unidadMedida, setUnidadMedida] = useState("");
@@ -34,6 +37,7 @@ const MyForm: FC<props> = ({ handleAddItems, /*handleRevajarItems*/}) => {
         console.log(res);
       })
     }
+
     return(
       <div>
         <Form onSubmit = {handleSubmit}>
@@ -95,7 +99,6 @@ const MyForm: FC<props> = ({ handleAddItems, /*handleRevajarItems*/}) => {
             </Form.Group> */}
 
           </Form.Row>
-
           <Button variant="primary" type="submit">
             Ingresar
           </Button>
@@ -104,39 +107,47 @@ const MyForm: FC<props> = ({ handleAddItems, /*handleRevajarItems*/}) => {
     )
   }
 
-  // else if(handleDeleteItems){
-  //   const deleteData = (e) => {
-  //     e.preventDefault();
-  //     const data ={
-  //       id: id,
-  //     }
-  //     handleDeleteItems(data);
-  //     axios.delete(`http://127.0.0.1:5000/api/delete/${data.id}`, {data} )
-  //     .then(res => {
-  //       console.log(res);
-  //     })
-  //   }
-  //   return(
-  //     <div>
-  //       <h1>RETIRAR PRODUCTO</h1>
-  //       <Form onSubmit = {deleteData}>
-  //       <Form.Row>
-  //         <Form.Group as={Col} controlId="id">
-  //           <Form.Label>Código</Form.Label>
-  //           <Form.Control
-  //             value={id}
-  //             onChange={(e) => setID(e.target.value)}
-  //           />
-  //         </Form.Group>
+  else if(handleRetirarItems){
+    const retirarData = (e) => {
+      e.preventDefault();
+      const data ={
+        codigo: codigo,
+      }
+      handleRetirarItems(data);
+      axios.post(`http://127.0.0.1:5000/api/retirar/items/${data.codigo}`, {data} )
+      .then(res => {
+        console.log(res);
+      })
+    }
+    return(
+      <div>
+        <h1>RETIRAR PRODUCTO</h1>
+        <Form onSubmit = {retirarData}>
+        <Form.Row>
+          <Form.Group as={Col} controlId="codigo">
+            <Form.Label>Código</Form.Label>
+            <Form.Control
+              value={codigo}
+              onChange={(e) => setCodigo(e.target.value)}
+            />
+          </Form.Group>
 
-  //       </Form.Row>
-  //         <Button variant="primary" type="submit">
-  //           Retirar
-  //         </Button>
-  //       </Form>
-  //     </div>
-  //   )
-  // }
+          <Form.Group as={Col} controlId="cantidad">
+            <Form.Label>Cantidad</Form.Label>
+            <Form.Control
+              value={cantidad}
+              onChange={(e) => setCantidad(e.target.value)}
+            />
+          </Form.Group>
+
+        </Form.Row>
+          <Button variant="primary" type="submit">
+            Retirar
+          </Button>
+        </Form>
+      </div>
+    )
+  }
   return(
     <div></div>
   );

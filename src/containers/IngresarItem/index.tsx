@@ -43,19 +43,14 @@ let headTable = [
   }, 
 ];
 
-// const getNewitems = () => {
-//   return axios.get('http://127.0.0.1:5000/api/items/lista')
-//   .then(res => res.data.item) //sin conchetes retorna al tiro
-// }
-
 const IngresarProducto = () => {
   const [newItems, setnewItems] = useState([]);
   const handleAddItems = (item) => {
+    console.log(newItems);
     let aux = [...newItems];
-    aux.push(item);
+    aux.push(item);    
     setnewItems(aux);
   };
-
 
   return (
     <div>
@@ -64,7 +59,6 @@ const IngresarProducto = () => {
       </div>
       <div className="IngresarProducto">
         <MyForm handleAddItems={handleAddItems}></MyForm>
-
         <MyTable headArr={headTable} bodyArrNewItems={newItems}></MyTable>
       </div>
       <div className="IngresarProducto">
