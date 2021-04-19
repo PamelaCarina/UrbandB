@@ -4,11 +4,13 @@ from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from sqlalchemy.sql import exists
+from sqlalchemy.sql.expression import desc, asc
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
 
+#TABLAS
 
 class Areas(db.Model):
     __tablename__ = 'areas'
@@ -24,6 +26,7 @@ class Categorias(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(80), unique=True, nullable=False)
     id_area = db.Column(db.Integer, db.ForeignKey('areas.id'))
+    items = db.relationship('Items', backref='categoria')
     # item = db.relationship("Items", back_populates="items")
 
 
@@ -31,7 +34,7 @@ class Items(db.Model):
     __tablename__ = 'items'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    codigo = db.Column(db.String(80),nullable=False)
+    codigo = db.Column(db.String(80),unique=True,nullable=True)
     nombre = db.Column(db.String(80), nullable=False)
     unidad_medida = db.Column(db.String(80), nullable=False)
     id_categoria = db.Column(db.Integer, db.ForeignKey('categorias.id'))
@@ -64,7 +67,7 @@ def ingresar_items():
     codigo = json.get('codigo')
     nombre = json.get('nombre')
     unidad_medida = json.get('unidad_medida')
-    # id_categoria = json.get('id_categoria')
+    id_categoria = json.get('id_categoria')
     # tipo_user = json.get('tipo_user')
     critico = json.get('critico')
     cantidad = json.get('cantidad')
@@ -75,7 +78,7 @@ def ingresar_items():
       print("DEBUG")
       # item = db.session.query().filter_by(codigo=codigo).scalar()
       # print(item)
-      cambio = db.session().query(Items).filter_by(codigo=codigo).update(
+      cambio = db.session().query(Items).filter_by(codigo=codigo,nombre=nombre,unidad_medida=unidad_medida).update(
           {Items.cantidad: Items.cantidad + cantidad})
       print(cambio)
       db.session.commit()
@@ -85,7 +88,7 @@ def ingresar_items():
       new_item.codigo = codigo
       new_item.nombre = nombre
       new_item.unidad_medida = unidad_medida
-      new_item.id_categoria = 1
+      new_item.id_categoria = id_categoria
       new_item.tipo_user = 1
       new_item.critico = critico
       new_item.cantidad = cantidad
@@ -95,6 +98,22 @@ def ingresar_items():
       # return jsonify({"id": new_item.id})
       return jsonify({"id": new_item.id}), 201
 
+
+@app.route('/api/lista/categorias/<id>',endpoint='list_linkeda',methods=['GET'])
+def lista_link_categorias(id):
+    categorias = db.session.query(Categorias).filter_by(id_area=id).join(Areas).order_by(asc(Areas.nombre))
+
+    return jsonify({
+        "categoria": [{"id": x.id, "nombre": x.nombre} for x in categorias]
+    })
+
+@app.route('/api/lista/items/<id>',endpoint='list_linkeda2',methods=['GET'])
+def lista_link_items(id):
+    items = db.session.query(Items).filter_by(id_categoria=id).join(Categorias).order_by(asc(Categorias.nombre))
+
+    return jsonify({
+        "item": [{"id": x.id, "codigo": x.codigo, "nombre": x.nombre, "unidad_medida": x.unidad_medida, "id_categoria": x.id_categoria , "tipo_user": x.tipo_user, "critico": x.critico, "cantidad": x.cantidad, "fecha": x.timestamp} for x in items]
+    })
 
 @app.route('/api/items/lista',endpoint='lista_items', methods=['GET'])
 def lista_items():
@@ -112,13 +131,13 @@ def lista_areas():
       "area": [{"id": x.id, "nombre": x.nombre} for x in areas]
     })
 
-@app.route('/api/categorias/lista/', endpoint='lista_categorias', methods= ['GET'])
-def lista_categorias():
-    categorias = Categorias.query.order_by(Categorias.id).all()
+# @app.route('/api/categorias/lista/', endpoint='lista_categorias', methods= ['GET'])
+# def lista_categorias():
+#     categorias = Categorias.query.order_by(Categorias.id).all()
 
-    return jsonify({
-      "categoria": [{"id": x.id, "nombre": x.nombre, "id_area": x.id_area} for x in categorias ]
-      })
+#     return jsonify({
+#       "categoria": [{"id": x.id, "nombre": x.nombre, "id_area": x.id_area} for x in categorias ]
+#       })
 
 @app.route('/api/login',methods=['POST'])
 def login():
@@ -137,7 +156,7 @@ def retirar_item():
     exists = db.session.query(db.exists().where(Items.codigo == codigo)).scalar()
     if exists:
       cambio = db.session().query(Items).filter_by(codigo=codigo).update(
-          {Items.cantidad: Items.cantidad + cantidad})
+          {Items.cantidad: Items.cantidad - cantidad})
       print(cambio)
       db.session.commit()
     return jsonify({"id": cambio})

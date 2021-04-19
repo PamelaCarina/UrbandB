@@ -19,6 +19,7 @@ const MyForm: FC<props> = ({ handleAddItems, handleRetirarItems}) => {
   const [unidadMedida, setUnidadMedida] = useState("");
   const [critico, setCritico] = useState("");
   const [cantidad, setCantidad] = useState("");
+  const [id_categoria, setId_categoria] = useState("");
 
   if(handleAddItems){
     const handleSubmit = (e) =>{
@@ -29,7 +30,8 @@ const MyForm: FC<props> = ({ handleAddItems, handleRetirarItems}) => {
         nombre: name,
         unidad_medida: unidadMedida,
         critico : critico,
-        cantidad: cantidad
+        cantidad: cantidad,
+        id_categoria: id_categoria,
       }
       handleAddItems(data);
       axios.post('http://127.0.0.1:5000/api/items/insert', {data} )
@@ -74,6 +76,14 @@ const MyForm: FC<props> = ({ handleAddItems, handleRetirarItems}) => {
           </Form.Row>
 
           <Form.Row>
+            <Form.Group as={Col} controlId="id_categoria">
+              <Form.Label>ID Categoría</Form.Label>
+              <Form.Control
+                value={id_categoria}
+                onChange={(e) => setId_categoria(e.target.value)}
+              />
+            </Form.Group>
+
             <Form.Group as={Col} controlId="critico">
               <Form.Label>Stock crítico</Form.Label>
               <Form.Control
@@ -89,15 +99,6 @@ const MyForm: FC<props> = ({ handleAddItems, handleRetirarItems}) => {
                 onChange={(e) => setCantidad(e.target.value)}
               />
             </Form.Group>
-
-            {/* <Form.Group as={Col} controlId="tipo_user">
-              <Form.Label>Tipo de usuario</Form.Label>
-              <Form.Control as="select" defaultValue="Choose...">
-                <option>Administrador</option>
-                <option>Lector</option>
-              </Form.Control>
-            </Form.Group> */}
-
           </Form.Row>
           <Button variant="primary" type="submit">
             Ingresar
@@ -114,7 +115,7 @@ const MyForm: FC<props> = ({ handleAddItems, handleRetirarItems}) => {
         codigo: codigo,
       }
       handleRetirarItems(data);
-      axios.post(`http://127.0.0.1:5000/api/retirar/items/${data.codigo}`, {data} )
+      axios.post('http://127.0.0.1:5000/api/retirar/items', {data} )
       .then(res => {
         console.log(res);
       })

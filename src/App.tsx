@@ -14,12 +14,12 @@ export default function App() {
     <Router>
       <Switch>
         <Route path="/login" component={Login} />
-        <Route path="/items" component={Items} />
+        <Route path="/items/:id" component={Items} />
         <Route path="/areas" component={Areas} />
         <Route path="/categorias/:id" component={Categorias} />
-        <Route path="/ingresar-item" component={IngresarItem} />
+        <Route path="/ingresar-item/" component={IngresarItem} />
         <Route path="/rebajar-item" component={RebajarItem} />
-        <Route path="/" component={RebajarItem} />
+        <Route path="/" component={Menu} />
       </Switch>
     </Router>
   );

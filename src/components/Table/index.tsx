@@ -1,6 +1,4 @@
-import React, {FC, Component, useEffect, useState} from 'react';
-//import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-// import BootstrapTable from 'react-bootstrap-table-next';
+import React, {FC} from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 //import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
@@ -17,8 +15,8 @@ interface tableArr {
     nombre: string;
     cantidad: number;
     unidad_medida: number;
+    critico: number;
     fecha: string;
-    stock: number;
   }[];
 
   bodyArrNewItems ? : {
