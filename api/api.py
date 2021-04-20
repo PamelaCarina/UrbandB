@@ -147,6 +147,14 @@ def login():
     ret = {'access_token': guard.encode_jwt_token(user)}
     return ret, 200
 
+@app.route('/api/tabla/returar',methods=['GET'])
+def tabla_retirar():
+    tabla = db.session.query(Items,Categorias.nombre,Areas.nombre).join(Categorias).join(Areas).filter_by(Items.id)
+
+    return jsonify({
+        "item": [{"id": x.id, "codigo": x.codigo, "nombre": x.nombre, "unidad_medida": x.unidad_medida, "area":x.areas, "categoria": x.categoria , "tipo_user": x.tipo_user, "critico": x.critico, "cantidad": x.cantidad, "fecha": x.timestamp} for x in tabla]
+    })
+
 @app.route('/api/retirar/items',methods=['POST'])
 def retirar_item():
     json = request.get_json()
