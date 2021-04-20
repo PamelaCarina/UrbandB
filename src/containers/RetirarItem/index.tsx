@@ -67,9 +67,9 @@ const IngresarProducto = () => {
 
         <MyTable headArr={headTable} bodyArrItems={items}></MyTable>
       </div>
-      <div className="IngresarProducto">
+      {/* <div className="IngresarProducto">
         <MyFooter></MyFooter>
-      </div>
+      </div> */}
     </div>
   );
 };

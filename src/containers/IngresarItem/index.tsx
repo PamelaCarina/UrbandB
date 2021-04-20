@@ -5,6 +5,7 @@ import axios from 'axios';
 import MyTable from '../../components/Table';
 import MyNavbar from '../../components/Navbar';
 import MyForm from '../../components/Form';
+import MySubmitButton from '../../components/SubmitButton';
 import MyFooter from '../../components/Footer';
 
 let menuNav = [{name:"Menú", rute: "/menu"}, {name: "Cerrar sesión", rute: "/login"}];
@@ -45,7 +46,7 @@ let headTable = [
 
 const IngresarProducto = () => {
   const [newItems, setnewItems] = useState([]);
-  const handleAddItems = (item) => {
+  const handleAddItemsTable = (item) => {
     console.log(newItems);
     let aux = [...newItems];
     aux.push(item);    
@@ -58,12 +59,13 @@ const IngresarProducto = () => {
         <MyNavbar menuArr={menuNav}> </MyNavbar>
       </div>
       <div className="IngresarProducto">
-        <MyForm handleAddItems={handleAddItems}></MyForm>
+        <MyForm handleAddItemsTable={handleAddItemsTable}></MyForm>
         <MyTable headArr={headTable} bodyArrNewItems={newItems}></MyTable>
+        <MySubmitButton></MySubmitButton>
       </div>
-      <div className="IngresarProducto">
+      {/* <div className="IngresarProducto">
         <MyFooter></MyFooter>
-      </div>
+      </div> */}
     </div>
   );
 };

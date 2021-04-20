@@ -20,7 +20,7 @@ const Menu = () => {
         <Nav defaultActiveKey="/home" className="flex-column">
           <Nav.Link as={Link} to="/areas"> Revisar Inventario </Nav.Link>
           <Nav.Link as={Link} to="/ingresar-item">Ingresar Producto</Nav.Link>
-          <Nav.Link as= {Link} to="/rebajar-item">Rebajar Productos</Nav.Link>
+          <Nav.Link as= {Link} to="/retirar-item">Retirar Productos</Nav.Link>
         </Nav>
       </div>
     </div>

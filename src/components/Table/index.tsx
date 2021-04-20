@@ -1,6 +1,8 @@
 import React, {FC} from 'react';
+import axios from 'axios';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
+import Button from 'react-bootstrap/Button';
 //import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 
 interface tableArr {
@@ -39,9 +41,11 @@ interface tableArr {
     categorias: string;
   }[];
 }
+
 const MyTable: FC<tableArr> = ({headArr, bodyArrItems, bodyArrAreas, bodyArrCategorias, bodyArrNewItems}) => {
-  let columns =[];
+  let columns=[];
   let rows=[];
+  let button=[];
   if(bodyArrItems){
       columns= headArr
       rows=bodyArrItems
@@ -56,9 +60,19 @@ const MyTable: FC<tableArr> = ({headArr, bodyArrItems, bodyArrAreas, bodyArrCate
       rows=bodyArrCategorias    
   }
   else if(bodyArrNewItems){
-      columns= headArr
-      rows=bodyArrNewItems
+    columns= headArr
+    rows=bodyArrNewItems
+    button = <Button variant="primary" type="submit" value="Ingresar" /> 
   }
+
+  // const handleSubmit = (e) =>{
+  //   e.preventDefault();
+  //   axios.post('http://127.0.0.1:5000/api/items/insert', {rows} )
+  //   .then(res => {
+  //     console.log(res);
+  //   })
+  // }
+  
 
   return (
     <BootstrapTable 

@@ -7,13 +7,13 @@ import axios from 'axios';
 import MyTable from '../../components/Table';
 
 interface props {
-  handleAddItems ?: (item) => void;
+  handleAddItemsTable ?: (item) => void;
   handleRetirarItems ?: (item) => void;
 }
 
 //necesito que los datos primero se agreguen a la tabla y después hacer un botón en la tabla de ingresar
 
-const MyForm: FC<props> = ({ handleAddItems, handleRetirarItems}) => {
+const MyForm: FC<props> = ({ handleAddItemsTable, handleRetirarItems}) => {
   const [codigo, setCodigo] = useState("");
   const [name, setName] = useState("");
   const [unidadMedida, setUnidadMedida] = useState("");
@@ -21,7 +21,7 @@ const MyForm: FC<props> = ({ handleAddItems, handleRetirarItems}) => {
   const [cantidad, setCantidad] = useState("");
   const [id_categoria, setId_categoria] = useState("");
 
-  if(handleAddItems){
+  if(handleAddItemsTable){
     const handleSubmit = (e) =>{
       e.preventDefault();
       // console.log(name);
@@ -33,11 +33,13 @@ const MyForm: FC<props> = ({ handleAddItems, handleRetirarItems}) => {
         cantidad: cantidad,
         id_categoria: id_categoria,
       }
-      handleAddItems(data);
+      handleAddItemsTable(data);
+
       axios.post('http://127.0.0.1:5000/api/items/insert', {data} )
       .then(res => {
         console.log(res);
       })
+      
     }
 
     return(
@@ -115,10 +117,10 @@ const MyForm: FC<props> = ({ handleAddItems, handleRetirarItems}) => {
         codigo: codigo,
       }
       handleRetirarItems(data);
-      axios.post('http://127.0.0.1:5000/api/retirar/items', {data} )
-      .then(res => {
-        console.log(res);
-      })
+      // axios.post('http://127.0.0.1:5000/api/retirar/items', {data} )
+      // .then(res => {
+      //   console.log(res);
+      // })
     }
     return(
       <div>
