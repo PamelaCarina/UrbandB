@@ -21,14 +21,14 @@ let headTable = [
     dataField: 'codigo', 
     text: 'Código'
   }, 
-  // {
-  //   dataField: 'Categoría', 
-  //   text: 'categoria'
-  // }, 
-  // {
-  //   dataField: 'area', 
-  //   text: 'Área'
-  // }, 
+  {
+    dataField: 'Categoría', 
+    text: 'categoria'
+  }, 
+  {
+    dataField: 'area', 
+    text: 'Área'
+  }, 
   {
     dataField: 'nombre', 
     text: 'Nombre'
@@ -54,7 +54,10 @@ let headTable = [
 const IngresarProducto = () => {
   const [items, setItems] = useState([]);
   const handleRetirarItems = (item) => {
-    setItems(items);
+    console.log(items);
+    let aux = [...items];
+    aux.push(item);    
+    setItems(aux);
   };
       
   return (

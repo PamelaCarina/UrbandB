@@ -115,35 +115,59 @@ const MyForm: FC<props> = ({ handleAddItemsTable, handleRetirarItems}) => {
       e.preventDefault();
       const data ={
         codigo: codigo,
+        nombre: name,
+        unidad_medida: unidadMedida,
+        cantidad: cantidad,
       }
       handleRetirarItems(data);
-      // axios.post('http://127.0.0.1:5000/api/retirar/items', {data} )
-      // .then(res => {
-      //   console.log(res);
-      // })
+      axios.post('http://127.0.0.1:5000/api/retirar/items', {data} )
+      .then(res => {
+        console.log(res);
+      })
     }
     return(
       <div>
         <h1>RETIRAR PRODUCTO</h1>
         <Form onSubmit = {retirarData}>
-        <Form.Row>
-          <Form.Group as={Col} controlId="codigo">
-            <Form.Label>Código</Form.Label>
-            <Form.Control
-              value={codigo}
-              onChange={(e) => setCodigo(e.target.value)}
-            />
-          </Form.Group>
+          <Form.Row>
+            <Form.Group as={Col} controlId="codigo">
+              <Form.Label>Código</Form.Label>
+              <Form.Control
+                value={codigo}
+                onChange={(e) => setCodigo(e.target.value)}
+              />
+            </Form.Group>
 
-          <Form.Group as={Col} controlId="cantidad">
-            <Form.Label>Cantidad</Form.Label>
-            <Form.Control
-              value={cantidad}
-              onChange={(e) => setCantidad(e.target.value)}
-            />
-          </Form.Group>
+            <Form.Group as={Col} controlId="cantidad">
+              <Form.Label>Cantidad</Form.Label>
+              <Form.Control
+                value={cantidad}
+                onChange={(e) => setCantidad(e.target.value)}
+              />
+            </Form.Group>
 
-        </Form.Row>
+          </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col} controlId="nombre">
+              <Form.Label>Nombre</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ingrese el nombre del producto"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group as={Col} controlId="unidad_medida">
+              <Form.Label>Unidad de Medida</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ingrese la unidad de medida"
+                value={unidadMedida}
+                onChange={(e) => setUnidadMedida(e.target.value)}
+              />
+            </Form.Group>
+          </Form.Row>
           <Button variant="primary" type="submit">
             Retirar
           </Button>

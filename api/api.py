@@ -150,16 +150,22 @@ def login():
 
 @app.route('/api/retirar/items',methods=['POST'])
 def retirar_item():
+    print("WENA HERMANO AKI ESTÁ EL CAMBIOOOO")
     json = request.get_json()
+    json = json.get('data')
     codigo = json.get('codigo')
     cantidad = json.get('cantidad')
+    nombre = json.get('nombre')
+    unidad_medida = json.get('unidad_medida')
+    new_item = Items()
     exists = db.session.query(db.exists().where(Items.codigo == codigo)).scalar()
+    print(exists)
     if exists:
-      cambio = db.session().query(Items).filter_by(codigo=codigo).update(
+      cambio = db.session().query(Items).filter_by(codigo=codigo,nombre=nombre,unidad_medida=unidad_medida).update(
           {Items.cantidad: Items.cantidad - cantidad})
       print(cambio)
       db.session.commit()
-    return jsonify({"id": cambio})
+      return jsonify({"id": cambio})
 
 if __name__ == '__main__':
     db.create_all()

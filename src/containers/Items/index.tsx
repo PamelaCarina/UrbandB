@@ -40,7 +40,22 @@ let headTable = [
   {
     dataField: 'fecha', 
     text: 'Fecha'
-  }];
+  },
+  // {
+  //   text: ' alerta ', 
+  //   formatter: (cell, row) => aviso_stock(row.id),
+  // }
+];
+
+// let aviso_stock = () => {
+//   if(estok > algo){
+//     return alerta :D
+//   }
+
+//   else if(estok = algo){
+
+//   }
+// }
   
 const Items = ({match}) => {
   let params = match.params;

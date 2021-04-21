@@ -62,7 +62,7 @@ const MyTable: FC<tableArr> = ({headArr, bodyArrItems, bodyArrAreas, bodyArrCate
   else if(bodyArrNewItems){
     columns= headArr
     rows=bodyArrNewItems
-    button = <Button variant="primary" type="submit" value="Ingresar" /> 
+   // button = <Button variant="primary" type="submit" value="Ingresar" /> 
   }
 
   // const handleSubmit = (e) =>{
