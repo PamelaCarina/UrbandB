@@ -8,9 +8,9 @@ import MyFooter from '../../components/Footer';
 
 let menuNav = [
   {
-    name:"Menú", 
+    name:"Menú",
     rute: "/menu"
-  }, 
+  },
   {
     name: "Cerrar sesión",
     rute: "/login"
@@ -18,48 +18,56 @@ let menuNav = [
 ];
 let headTable = [
   {
-    dataField: 'codigo', 
+    dataField: 'codigo',
     text: 'Código'
-  }, 
+  },
   {
-    dataField: 'Categoría', 
+    dataField: 'Categoría',
     text: 'categoria'
-  }, 
+  },
   {
-    dataField: 'area', 
+    dataField: 'area',
     text: 'Área'
-  }, 
+  },
   {
-    dataField: 'nombre', 
+    dataField: 'nombre',
     text: 'Nombre'
-  }, 
+  },
   {
-    dataField: 'unidad_medida', 
+    dataField: 'unidad_medida',
     text: 'Unidad de Medida'
-  }, 
+  },
   {
-    dataField: 'cantidad', 
+    dataField: 'cantidad',
     text: 'Cantidad'
-  }, 
+  },
   {
-    dataField: 'critico', 
+    dataField: 'critico',
     text: 'Stock Crítico'
   },
   {
-    dataField: 'fecha', 
+    dataField: 'fecha',
     text: 'Fecha'
-  }, 
+  },
 ];
 
 const IngresarProducto = () => {
   const [items, setItems] = useState([]);
+  const [newItems, setNewItems] = useState([]);
   const handleRetirarItems = (item) => {
-    console.log(items);
-    let aux = [...items];
-    aux.push(item);    
-    setItems(aux);
+    console.log(newItems);
+    let aux = [...newItems];
+    aux.push(item);
+    setNewItems(aux);
   };
-      
+   useEffect(()=>{
+     axios.get('http://127.0.0.1:5000/api/tabla/retirar')
+     .then(res => {
+       console.log(res);
+      setItems(res.data.item)
+     })
+   },[])
+
   return (
     <div>
       <div className="IngresarProducto">

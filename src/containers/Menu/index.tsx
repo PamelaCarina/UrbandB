@@ -12,7 +12,7 @@ let menuNav = [{name: "Cerrar Sesión", rute: "/login"}];
 const Menu = () => {
   return (
     <div>
-      <Alerts></Alerts>
+     {/* <Alerts></Alerts>*/}
       <div className="Menu">
         <MyNavbar menuArr={menuNav}> </MyNavbar>
       </div>
