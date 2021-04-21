@@ -108,7 +108,7 @@ def lista_link_categorias(id):
 
 @app.route('/api/lista/items/<id>',endpoint='list_linkeda2',methods=['GET'])
 def lista_link_items(id):
-    categorias = db.session.query(Items).filter_by(id_categoria=id).join(Categorias).order_by(asc(Categorias.nombre))
+    items = db.session.query(Items).filter_by(id_categoria=id).join(Categorias).order_by(asc(Categorias.nombre))
 
     return jsonify({
         "item": [{"id": x.id, "codigo": x.codigo, "nombre": x.nombre, "unidad_medida": x.unidad_medida, "id_categoria": x.id_categoria , "tipo_user": x.tipo_user, "critico": x.critico, "cantidad": x.cantidad, "fecha": x.timestamp} for x in items]
@@ -162,11 +162,14 @@ def retirar_item():
     cantidad = json.get('cantidad')
     exists = db.session.query(db.exists().where(Items.codigo == codigo)).scalar()
     if exists:
-      cambio = db.session().query(Items).filter_by(codigo=codigo).update(
-          {Items.cantidad: Items.cantidad + cantidad})
+      print("DEBUG")
+      # item = db.session.query().filter_by(codigo=codigo).scalar()
+      # print(item)
+      cambio = db.session().query(Items).filter_by(codigo=codigo,nombre=nombre,unidad_medida=unidad_medida).update(
+          {Items.cantidad: Items.cantidad - cantidad})
       print(cambio)
       db.session.commit()
-    return jsonify({"id": cambio})
+      return jsonify({"id": cambio})
 
 if __name__ == '__main__':
     db.create_all()
