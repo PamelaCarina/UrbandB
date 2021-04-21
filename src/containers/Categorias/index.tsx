@@ -35,7 +35,7 @@ let headTable = [
 
 let revisar = (id) => {
   return(
-    <Button as={Link} to={`/items/${id}`}> Revisar </Button>
+    <Button variant="outline-dark" as={Link} to={`/items/${id}`}> Revisar </Button>
   )
 }
 

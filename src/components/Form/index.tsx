@@ -102,7 +102,7 @@ const MyForm: FC<props> = ({ handleAddItemsTable, handleRetirarItems}) => {
               />
             </Form.Group>
           </Form.Row>
-          <Button variant="primary" type="submit">
+          <Button variant="outline-dark" type="submit">
             Ingresar
           </Button>
         </Form>
@@ -168,7 +168,7 @@ const MyForm: FC<props> = ({ handleAddItemsTable, handleRetirarItems}) => {
               />
             </Form.Group>
           </Form.Row>
-          <Button variant="primary" type="submit">
+          <Button variant="outline-dark" type="submit">
             Retirar
           </Button>
         </Form>

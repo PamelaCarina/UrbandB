@@ -5,6 +5,7 @@ import axios from 'axios';
 import MyTable from '../../components/Table';
 import MyNavbar from '../../components/Navbar';
 import MyFooter from '../../components/Footer';
+import Alert from 'react-bootstrap/Alert';
 
 let menuNav = [
   {
@@ -41,26 +42,33 @@ let headTable = [
     dataField: 'fecha', 
     text: 'Fecha'
   },
-  // {
-  //   text: ' alerta ', 
-  //   formatter: (cell, row) => aviso_stock(row.id),
-  // }
+  {
+    text: ' alerta ', 
+    formatter: (cell, row) => aviso_stock(row.cantidad, row.critico),
+  }
 ];
 
-// let aviso_stock = () => {
-//   if(estok > algo){
-//     return alerta :D
-//   }
-
-//   else if(estok = algo){
-
-//   }
-// }
+let aviso_stock = (cantidad, critico) => {
+  if (cantidad >= (critico + 5)) {
+    return ( 
+      <Alert variant='success'>Stock Ok</Alert>
+    )
+  }
+  else if (cantidad >= (critico + 2) && cantidad <= (critico + 4)){
+    return ( 
+      <Alert variant='warning'>Stock casi bajo</Alert>
+    )
+  }
+  else if (cantidad <= (critico + 2)){
+    return ( 
+      <Alert variant='danger'>¡Stock Bajo!</Alert>
+    )
+  }
+};
   
 const Items = ({match}) => {
   let params = match.params;
   const [items, setItems] = useState([]);
-  console.log(params.id);
   useEffect(()=>{
     axios.get(`http://127.0.0.1:5000/api/lista/items/${params.id}`)
     .then(res => {
