@@ -45,9 +45,9 @@ const Areas = () =>  {
 
   return (
     <div>
-      {/* <div className="Areas">
+      <div className="Areas">
         <MyNavbar menuArr={menuNav}></MyNavbar>
-      </div> */}
+      </div>
       <div className="Areas">
         <MyTable headArr={headTable} bodyArrAreas={areas}></MyTable>
       </div>

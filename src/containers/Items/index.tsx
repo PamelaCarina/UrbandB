@@ -6,7 +6,20 @@ import MyTable from '../../components/Table';
 import MyNavbar from '../../components/Navbar';
 import MyFooter from '../../components/Footer';
 
-let menuNav = [{name: "Menú", rute: "/menu"}, {name: "Áreas", rute: "/areas"}, {name:"Cerrar Sesión", rute:"/login"}];
+let menuNav = [
+  {
+    name: "Menú", 
+    rute: "/menu"
+  }, 
+  {
+    name: "Áreas", 
+    rute: "/areas"
+  }, 
+  {
+    name:"Cerrar Sesión", 
+    rute:"/login"
+  }
+];
 let headTable = [
   {
     dataField: 'codigo', 
@@ -27,14 +40,29 @@ let headTable = [
   {
     dataField: 'fecha', 
     text: 'Fecha'
-  }];
+  },
+  // {
+  //   text: ' alerta ', 
+  //   formatter: (cell, row) => aviso_stock(row.id),
+  // }
+];
+
+// let aviso_stock = () => {
+//   if(estok > algo){
+//     return alerta :D
+//   }
+
+//   else if(estok = algo){
+
+//   }
+// }
   
-const Items = (match) => {
+const Items = ({match}) => {
   let params = match.params;
   const [items, setItems] = useState([]);
   console.log(params.id);
   useEffect(()=>{
-    axios.get(`http://127.0.0.1:5000/api/items/lista/${params.id}`)
+    axios.get(`http://127.0.0.1:5000/api/lista/items/${params.id}`)
     .then(res => {
       console.log(res);
       setItems(res.data.item)
@@ -42,9 +70,9 @@ const Items = (match) => {
   },[])
   return (
     <div>
-      {/* <div className="Items">
+      <div className="Items">
         <MyNavbar menuArr={menuNav}></MyNavbar>
-      </div> */}
+      </div>
       <div className="Items">
         <MyTable headArr={headTable} bodyArrItems={items}></MyTable>
       </div>

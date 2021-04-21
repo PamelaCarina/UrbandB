@@ -4,20 +4,24 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import MyTable from '../../components/Table';
 
 interface props {
-  handleAddItems ?: (item) => void;
-  // handleDeleteItems ?: (item) => void;
+  handleAddItemsTable ?: (item) => void;
+  handleRetirarItems ?: (item) => void;
 }
 
-const MyForm: FC<props> = ({ handleAddItems, /*handleRevajarItems*/}) => {
+//necesito que los datos primero se agreguen a la tabla y después hacer un botón en la tabla de ingresar
+
+const MyForm: FC<props> = ({ handleAddItemsTable, handleRetirarItems}) => {
   const [codigo, setCodigo] = useState("");
   const [name, setName] = useState("");
   const [unidadMedida, setUnidadMedida] = useState("");
   const [critico, setCritico] = useState("");
   const [cantidad, setCantidad] = useState("");
+  const [id_categoria, setId_categoria] = useState("");
 
-  if(handleAddItems){
+  if(handleAddItemsTable){
     const handleSubmit = (e) =>{
       e.preventDefault();
       // console.log(name);
@@ -26,14 +30,18 @@ const MyForm: FC<props> = ({ handleAddItems, /*handleRevajarItems*/}) => {
         nombre: name,
         unidad_medida: unidadMedida,
         critico : critico,
-        cantidad: cantidad
+        cantidad: cantidad,
+        id_categoria: id_categoria,
       }
-      handleAddItems(data);
+      handleAddItemsTable(data);
+
       axios.post('http://127.0.0.1:5000/api/items/insert', {data} )
       .then(res => {
         console.log(res);
       })
+      
     }
+
     return(
       <div>
         <Form onSubmit = {handleSubmit}>
@@ -70,6 +78,14 @@ const MyForm: FC<props> = ({ handleAddItems, /*handleRevajarItems*/}) => {
           </Form.Row>
 
           <Form.Row>
+            <Form.Group as={Col} controlId="id_categoria">
+              <Form.Label>ID Categoría</Form.Label>
+              <Form.Control
+                value={id_categoria}
+                onChange={(e) => setId_categoria(e.target.value)}
+              />
+            </Form.Group>
+
             <Form.Group as={Col} controlId="critico">
               <Form.Label>Stock crítico</Form.Label>
               <Form.Control
@@ -85,17 +101,7 @@ const MyForm: FC<props> = ({ handleAddItems, /*handleRevajarItems*/}) => {
                 onChange={(e) => setCantidad(e.target.value)}
               />
             </Form.Group>
-
-            {/* <Form.Group as={Col} controlId="tipo_user">
-              <Form.Label>Tipo de usuario</Form.Label>
-              <Form.Control as="select" defaultValue="Choose...">
-                <option>Administrador</option>
-                <option>Lector</option>
-              </Form.Control>
-            </Form.Group> */}
-
           </Form.Row>
-
           <Button variant="primary" type="submit">
             Ingresar
           </Button>
@@ -104,39 +110,71 @@ const MyForm: FC<props> = ({ handleAddItems, /*handleRevajarItems*/}) => {
     )
   }
 
-  // else if(handleDeleteItems){
-  //   const deleteData = (e) => {
-  //     e.preventDefault();
-  //     const data ={
-  //       id: id,
-  //     }
-  //     handleDeleteItems(data);
-  //     axios.delete(`http://127.0.0.1:5000/api/delete/${data.id}`, {data} )
-  //     .then(res => {
-  //       console.log(res);
-  //     })
-  //   }
-  //   return(
-  //     <div>
-  //       <h1>RETIRAR PRODUCTO</h1>
-  //       <Form onSubmit = {deleteData}>
-  //       <Form.Row>
-  //         <Form.Group as={Col} controlId="id">
-  //           <Form.Label>Código</Form.Label>
-  //           <Form.Control
-  //             value={id}
-  //             onChange={(e) => setID(e.target.value)}
-  //           />
-  //         </Form.Group>
+  else if(handleRetirarItems){
+    const retirarData = (e) => {
+      e.preventDefault();
+      const data ={
+        codigo: codigo,
+        nombre: name,
+        unidad_medida: unidadMedida,
+        cantidad: cantidad,
+      }
+      handleRetirarItems(data);
+      axios.post('http://127.0.0.1:5000/api/retirar/items', {data} )
+      .then(res => {
+        console.log(res);
+      })
+    }
+    return(
+      <div>
+        <h1>RETIRAR PRODUCTO</h1>
+        <Form onSubmit = {retirarData}>
+          <Form.Row>
+            <Form.Group as={Col} controlId="codigo">
+              <Form.Label>Código</Form.Label>
+              <Form.Control
+                value={codigo}
+                onChange={(e) => setCodigo(e.target.value)}
+              />
+            </Form.Group>
 
-  //       </Form.Row>
-  //         <Button variant="primary" type="submit">
-  //           Retirar
-  //         </Button>
-  //       </Form>
-  //     </div>
-  //   )
-  // }
+            <Form.Group as={Col} controlId="cantidad">
+              <Form.Label>Cantidad</Form.Label>
+              <Form.Control
+                value={cantidad}
+                onChange={(e) => setCantidad(e.target.value)}
+              />
+            </Form.Group>
+
+          </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col} controlId="nombre">
+              <Form.Label>Nombre</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ingrese el nombre del producto"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group as={Col} controlId="unidad_medida">
+              <Form.Label>Unidad de Medida</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ingrese la unidad de medida"
+                value={unidadMedida}
+                onChange={(e) => setUnidadMedida(e.target.value)}
+              />
+            </Form.Group>
+          </Form.Row>
+          <Button variant="primary" type="submit">
+            Retirar
+          </Button>
+        </Form>
+      </div>
+    )
+  }
   return(
     <div></div>
   );

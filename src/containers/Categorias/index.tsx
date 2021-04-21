@@ -8,7 +8,20 @@ import MyTable from '../../components/Table';
 import MyNavbar from '../../components/Navbar';
 import MyFooter from '../../components/Footer';
 
-let menuNav = [{name: "Menú", rute: "/menu"}, {name: "Áreas", rute: "/areas"}, {name:"Cerrar Sesión", rute:"/login"}];
+let menuNav = [
+  {
+    name: "Menú", 
+    rute: "/menu"
+  }, 
+  {
+    name: "Áreas",
+    rute: "/areas"
+  }, 
+  {
+    name:"Cerrar Sesión",
+    rute:"/login"
+  }
+];
 let headTable = [
   {
     dataField: 'nombre',
@@ -47,9 +60,9 @@ const Categorias = ({match}) => {
       <div className="Categorias">
         <MyTable headArr={headTable} bodyArrCategorias={categorias}></MyTable>
       </div>
-      <div className="Categorias">
+      {/* <div className="Categorias">
         <MyFooter></MyFooter>
-      </div>
+      </div> */}
     </div>
   );
 };

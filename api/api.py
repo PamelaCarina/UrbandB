@@ -10,6 +10,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
 
+#TABLAS
 
 class Areas(db.Model):
     __tablename__ = 'areas'
@@ -39,8 +40,8 @@ class Items(db.Model):
     id_categoria = db.Column(db.Integer, db.ForeignKey('categorias.id'))
     # categoria = db.relationship('Categorias', back_populates="items")
     tipo_user = db.Column(db.String(120), nullable=False)
-    critico = db.Column(db.Integer, nullable=True)
-    cantidad = db.Column(db.Integer, nullable=True)
+    critico = db.Column(db.Integer, nullable=False)
+    cantidad = db.Column(db.Integer, nullable=False)
     timestamp = db.Column(
         db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -66,7 +67,7 @@ def ingresar_items():
     codigo = json.get('codigo')
     nombre = json.get('nombre')
     unidad_medida = json.get('unidad_medida')
-    # id_categoria = json.get('id_categoria')
+    id_categoria = json.get('id_categoria')
     # tipo_user = json.get('tipo_user')
     critico = json.get('critico')
     cantidad = json.get('cantidad')
@@ -87,7 +88,7 @@ def ingresar_items():
       new_item.codigo = codigo
       new_item.nombre = nombre
       new_item.unidad_medida = unidad_medida
-      new_item.id_categoria = 1
+      new_item.id_categoria = id_categoria
       new_item.tipo_user = 1
       new_item.critico = critico
       new_item.cantidad = cantidad
@@ -157,14 +158,17 @@ def tabla_retirar():
 
 @app.route('/api/retirar/items',methods=['POST'])
 def retirar_item():
+    print("WENA HERMANO AKI ESTÁ EL CAMBIOOOO")
     json = request.get_json()
+    json = json.get('data')
     codigo = json.get('codigo')
     cantidad = json.get('cantidad')
+    nombre = json.get('nombre')
+    unidad_medida = json.get('unidad_medida')
+    new_item = Items()
     exists = db.session.query(db.exists().where(Items.codigo == codigo)).scalar()
+    print(exists)
     if exists:
-      print("DEBUG")
-      # item = db.session.query().filter_by(codigo=codigo).scalar()
-      # print(item)
       cambio = db.session().query(Items).filter_by(codigo=codigo,nombre=nombre,unidad_medida=unidad_medida).update(
           {Items.cantidad: Items.cantidad - cantidad})
       print(cambio)
