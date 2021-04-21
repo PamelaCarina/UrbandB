@@ -158,7 +158,6 @@ def tabla_retirar():
 
 @app.route('/api/retirar/items',methods=['POST'])
 def retirar_item():
-    print("WENA HERMANO AKI ESTÁ EL CAMBIOOOO")
     json = request.get_json()
     json = json.get('data')
     codigo = json.get('codigo')

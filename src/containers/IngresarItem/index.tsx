@@ -61,7 +61,7 @@ const IngresarProducto = () => {
       <div className="IngresarProducto">
         <MyForm handleAddItemsTable={handleAddItemsTable}></MyForm>
         <MyTable headArr={headTable} bodyArrNewItems={newItems}></MyTable>
-        <MySubmitButton></MySubmitButton>
+        {/* <MySubmitButton></MySubmitButton> */}
       </div>
       {/* <div className="IngresarProducto">
         <MyFooter></MyFooter>
