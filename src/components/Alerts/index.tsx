@@ -1,22 +1,25 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, FC} from 'react';
 import Alert from 'react-bootstrap/Alert';
 import axios from 'axios';
 
-let Alerts = ({match}) => {
-    let params = match.params;
+interface props{
+  alertas:{
+    critico: number;
+    cantidad: number;
+  }[];
+};
+let mapeo;
+let cant;
+let crit;
+let Alerts: FC<props> = ({alertas}) => {
     const [bajo, setBajo] = useState(true);
     const [medio, setMedio] = useState(true);
     const [alto, setAlto] = useState(true);
-
-    useEffect(()=>{
-        axios.get(`http://127.0.0.1:5000/api/lista/items/${params.id}`)
-        .then(res => {
-          console.log(res);
-          setItems(res.data.item)
-        })
-    },[])
-
-    if (bajo) {
+    mapeo = alertas.map((elem)=>{
+      cant = elem.cantidad;
+      crit = elem.critico;   
+    })
+    if (bajo && (cant <= (crit + 2))) {
       return (
         <Alert variant="danger" onClose={() => setBajo(false)} dismissible>
           <Alert.Heading>Stock bajo!</Alert.Heading>
@@ -26,9 +29,9 @@ let Alerts = ({match}) => {
         </Alert>
       );
     }
-    else if(medio){
+    else if(medio && (cant > (crit + 2) && cant <= (crit + 4))){
       return(
-        <Alert variant="success" onClose={() => setMedio(false)} dismissible>
+        <Alert variant="warning" onClose={() => setMedio(false)} dismissible>
           <Alert.Heading>Stock casi bajo!</Alert.Heading>
           <p>
             Tu stock está a punto de llegar a niveles críticos!
@@ -36,7 +39,7 @@ let Alerts = ({match}) => {
         </Alert>
       )
     }
-    else if(alto){
+    else if(alto && (cant > (crit + 4))){
       return(
         <Alert variant="success" onClose={() => setAlto(false)} dismissible>
           <Alert.Heading>Stock Ok!</Alert.Heading>

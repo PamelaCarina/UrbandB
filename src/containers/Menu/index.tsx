@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios'
 //import '../App.global.css';
 import MyNavbar from '../../components/Navbar';
 import Alerts from '../../components/Alerts';
@@ -8,11 +9,18 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 //import Nav from 'react-bootstrap/Nav';
 
 let menuNav = [{name: "Cerrar Sesión", rute: "/login"}];
-
 const Menu = () => {
+  const [items, setItems] = useState([]);
+  useEffect(()=>{
+    axios.get(`http://127.0.0.1:5000/api/items/lista`)
+    .then(res => {
+      console.log(res);
+      setItems(res.data.item)
+    })
+  },[])
   return (
     <div>
-      <Alerts></Alerts>
+      <Alerts alertas={items}></Alerts>
       <div className="Menu">
         <MyNavbar menuArr={menuNav}> </MyNavbar>
       </div>

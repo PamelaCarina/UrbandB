@@ -48,6 +48,7 @@ const Areas = () =>  {
       <div className="Areas">
         <MyNavbar menuArr={menuNav}></MyNavbar>
       </div>
+      <div>Áreaas</div>
       <div className="Areas">
         <MyTable headArr={headTable} bodyArrAreas={areas}></MyTable>
       </div>

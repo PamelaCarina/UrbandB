@@ -59,7 +59,7 @@ const MyTable: FC<tableArr> = ({headArr, bodyArrItems, bodyArrAreas, bodyArrCate
   else if(bodyArrNewItems){
     columns= headArr
     rows=bodyArrNewItems
-  }  
+  }
 
   return (
     <BootstrapTable 

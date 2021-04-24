@@ -16,6 +16,10 @@ let menuNav = [
     name: "Áreas", 
     rute: "/areas"
   }, 
+  // {
+  //   name: "Categorías",
+  //   rute: `/categorias/:id`,
+  // },
   {
     name:"Cerrar Sesión", 
     rute:"/login"
@@ -49,12 +53,12 @@ let headTable = [
 ];
 
 let aviso_stock = (cantidad, critico) => {
-  if (cantidad >= (critico + 5)) {
+  if (cantidad > (critico + 4)) {
     return ( 
       <Alert variant='success'>Stock Ok</Alert>
     )
   }
-  else if (cantidad >= (critico + 2) && cantidad <= (critico + 4)){
+  else if (cantidad > (critico + 2) && cantidad <= (critico + 4)){
     return ( 
       <Alert variant='warning'>Stock casi bajo</Alert>
     )
@@ -65,7 +69,7 @@ let aviso_stock = (cantidad, critico) => {
     )
   }
 };
-  
+
 const Items = ({match}) => {
   let params = match.params;
   const [items, setItems] = useState([]);
@@ -81,6 +85,7 @@ const Items = ({match}) => {
       <div className="Items">
         <MyNavbar menuArr={menuNav}></MyNavbar>
       </div>
+      <div>Productos</div>
       <div className="Items">
         <MyTable headArr={headTable} bodyArrItems={items}></MyTable>
       </div>

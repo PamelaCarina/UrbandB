@@ -57,6 +57,7 @@ const Categorias = ({match}) => {
       <div className="Categorias">
         <MyNavbar menuArr={menuNav}></MyNavbar>
       </div>
+      <div>Categorías</div>
       <div className="Categorias">
         <MyTable headArr={headTable} bodyArrCategorias={categorias}></MyTable>
       </div>
