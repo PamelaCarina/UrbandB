@@ -1,16 +1,10 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import MyNavbar from '../../components/Navbar';
-
-let menuNav = [{name: "", rute: "/"}];
 
 const Login = () => {
   return(
     <div>
-      <div className="Mylogin">
-        <MyNavbar menuArr={menuNav}></MyNavbar>
-      </div>
       <Form>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Rut</Form.Label>

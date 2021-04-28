@@ -10,11 +10,7 @@ let menuNav = [
   {
     name:"Menú", 
     rute: "/menu"
-  }, 
-  {
-    name: "Cerrar sesión",
-    rute: "/login"
-  }
+  },
 ];
 let headTable = [
   {
@@ -22,8 +18,8 @@ let headTable = [
     text: 'Código'
   }, 
   {
-    dataField: 'Categoría', 
-    text: 'categoria'
+    dataField: 'categoria', 
+    text: 'Categoría'
   }, 
   {
     dataField: 'area', 
@@ -52,7 +48,7 @@ let headTable = [
 ];
 
 const IngresarProducto = () => {
-  // const [items, setItems] = useState([]);
+  const [items, setItems] = useState([]);
   const [newItems, setNewItems] = useState([]);
   const handleRetirarItems = (item) => {
     console.log(newItems);
@@ -60,14 +56,14 @@ const IngresarProducto = () => {
     aux.push(item);    
     setNewItems(aux);
   };
-  // useEffect(()=>{
-  //   axios.get(`http://127.0.0.1:5000/api/tabla/retirar`)
-  //   .then(res => {
-  //     console.log(res);
-  //     setItems(res.data.item)
-  //   })
-  // },[])
-      
+  useEffect(()=>{
+    axios.get(`http://127.0.0.1:5000/api/tabla/retirar`)
+    .then(res => {
+      console.log(res);
+      setItems(res.data.item)
+    })
+  },[])
+
   return (
     <div>
       <div className="IngresarProducto">
@@ -76,7 +72,7 @@ const IngresarProducto = () => {
       <div className="IngresarProducto">
         <MyForm handleRetirarItems={handleRetirarItems}></MyForm>
 
-        <MyTable headArr={headTable} bodyArrItems={newItems}></MyTable>
+        <MyTable headArr={headTable} bodyArrItems={items}></MyTable>
       </div>
       {/* <div className="IngresarProducto">
         <MyFooter></MyFooter>

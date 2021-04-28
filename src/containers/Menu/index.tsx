@@ -1,14 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios'
-//import '../App.global.css';
 import MyNavbar from '../../components/Navbar';
 import Alerts from '../../components/Alerts';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-//import Nav from 'react-bootstrap/Nav';
 
-let menuNav = [{name: "Cerrar Sesión", rute: "/login"}];
+let menuNav = [{name: " ", rute: " "}];
 const Menu = () => {
   const [items, setItems] = useState([]);
   useEffect(()=>{
@@ -20,7 +18,7 @@ const Menu = () => {
   },[])
   return (
     <div>
-      <Alerts alertas={items}></Alerts>
+      {/* <Alerts alertas={items}></Alerts> */}
       <div className="Menu">
         <MyNavbar menuArr={menuNav}> </MyNavbar>
       </div>

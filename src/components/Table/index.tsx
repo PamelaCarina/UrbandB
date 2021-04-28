@@ -1,34 +1,34 @@
 import React, {FC} from 'react';
-// import axios from 'axios';
+import './index.css';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
-//import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 
 interface tableArr {
   headArr: {
     dataField: string;
     text: string;
-  }[]; //aca me va a llegar el formatter: (ID QUE QUIERO)
+  }[];
 
   bodyArrItems ? : {
-    id: number;
     codigo: string;
     nombre: string;
     cantidad: number;
     unidad_medida: number;
     critico: number;
+    categoria: string;
+    area: string;
     fecha: string;
   }[];
 
-  bodyArrNewItems ? : {
-    id: number;
-    codigo: string;
-    nombre: string;
-    unidad_medida: number;
-    critico: string;
-    cantidad: number;
-    id_categoria: number;
-  }[];
+  // bodyArrNewItems ? : {
+  //   id: number;
+  //   codigo: string;
+  //   nombre: string;
+  //   unidad_medida: number;
+  //   critico: string;
+  //   cantidad: number;
+  //   id_categoria: number;
+  // }[];
 
   bodyArrAreas ? : {
     id: number;
@@ -41,7 +41,7 @@ interface tableArr {
   }[];
 }
 
-const MyTable: FC<tableArr> = ({headArr, bodyArrItems, bodyArrAreas, bodyArrCategorias, bodyArrNewItems}) => {
+const MyTable: FC<tableArr> = ({headArr, bodyArrItems, bodyArrAreas, bodyArrCategorias, /*bodyArrNewItems*/}) => {
   let columns=[];
   let rows=[];
   if(bodyArrItems){
@@ -56,21 +56,58 @@ const MyTable: FC<tableArr> = ({headArr, bodyArrItems, bodyArrAreas, bodyArrCate
       columns= headArr
       rows=bodyArrCategorias    
   }
-  else if(bodyArrNewItems){
-    columns= headArr
-    rows=bodyArrNewItems
-  }
+  // else if(bodyArrNewItems){
+  //   columns= headArr
+  //   rows=bodyArrNewItems
+  // }
+
+  const customTotal = (from, to, size) => (
+    <span className="react-bootstrap-table-pagination-total">
+      Producto { from } al { to } de un total { size }.
+    </span>
+  );
+  
+  const options = {
+    paginationSize: 10,
+    pageStartIndex: 1,
+    //alwaysShowAllBtns: true, // Always show next and previous button
+    //withFirstAndLast: false, // Hide the going to First and Last page button
+    //hideSizePerPage: true, // Hide the sizePerPage dropdown always
+    //hidePageListOnlyOnePage: true, // Hide the pagination list when only one page
+    //firstPageText: 'First',
+    prePageText: 'Atrás',
+    nextPageText: 'Siguiente',
+    //lastPageText: 'Last',
+    //nextPageTitle: 'First page',
+    prePageTitle: 'Pre page',
+    firstPageTitle: 'Next page',
+    lastPageTitle: 'Last page',
+    showTotal: true,
+    paginationTotalRenderer: customTotal,
+    disablePageTitle: true,
+    sizePerPageList: [{
+      text: '4', value: 4
+    }, {
+      text: '6', value: 6
+    }, 
+    // {
+    //   text: 'All', value: rows.length
+    // }
+  ] // A numeric array is also available. the purpose of above example is custom the text
+  };
 
   return (
-    <BootstrapTable 
-      keyField='id' 
-      data={ rows } 
-      columns={ columns } 
-      pagination={ paginationFactory() }
-      striped
-      hover
-      condensed
-    />
+    <div>
+      <BootstrapTable 
+        keyField='id' 
+        data={ rows } 
+        columns={ columns } 
+        pagination={ paginationFactory(options) }
+        striped
+        hover
+        condensed
+      />
+    </div>
   );
 }
 

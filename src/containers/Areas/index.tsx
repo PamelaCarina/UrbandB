@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-//import '../App.global.css';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
@@ -11,11 +10,7 @@ let menuNav = [
   {
     name: "Menú",
     rute: "/"
-  }, 
-  {
-    name: "Cerrar Sesión",
-    rute: "/login"
-  }
+  },
 ];
 let headTable = [
   {
@@ -23,7 +18,7 @@ let headTable = [
     text: 'Áreas',
   },
   {
-    text: ' botoncito ', 
+    text: ' ', 
     formatter: (cell, row) => revisar(row.id),
   }
 ];
@@ -48,7 +43,11 @@ const Areas = () =>  {
       <div className="Areas">
         <MyNavbar menuArr={menuNav}></MyNavbar>
       </div>
-      <div>Áreaas</div>
+      <div className="Areas">
+        <h1>a</h1>
+        <h2>Bienvenido al control de inventarios</h2>
+        <h3>Por favor seleccione el área que desea revisar.</h3>
+      </div>
       <div className="Areas">
         <MyTable headArr={headTable} bodyArrAreas={areas}></MyTable>
       </div>
