@@ -8,43 +8,43 @@ import MyFooter from '../../components/Footer';
 
 let menuNav = [
   {
-    name:"Menú", 
+    name:"Menú",
     rute: "/menu"
   },
 ];
 let headTable = [
   {
-    dataField: 'codigo', 
+    dataField: 'codigo',
     text: 'Código'
-  }, 
+  },
   {
     dataField: 'categoria', 
     text: 'Categoría'
   }, 
   {
-    dataField: 'area', 
+    dataField: 'area',
     text: 'Área'
-  }, 
+  },
   {
-    dataField: 'nombre', 
+    dataField: 'nombre',
     text: 'Nombre'
-  }, 
+  },
   {
-    dataField: 'unidad_medida', 
+    dataField: 'unidad_medida',
     text: 'Unidad de Medida'
-  }, 
+  },
   {
-    dataField: 'cantidad', 
+    dataField: 'cantidad',
     text: 'Cantidad'
-  }, 
+  },
   {
-    dataField: 'critico', 
+    dataField: 'critico',
     text: 'Stock Crítico'
   },
   {
-    dataField: 'fecha', 
+    dataField: 'fecha',
     text: 'Fecha'
-  }, 
+  },
 ];
 
 const IngresarProducto = () => {
