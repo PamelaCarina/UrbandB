@@ -110,8 +110,8 @@ def lista_link_categorias(id):
         "categoria": [{"id": categorias.id, "nombre": categorias.nombre, "area": areas.nombre} for categorias, areas in lista]
     })
 
-# @app.route('/api/lista/items/<id>',endpoint='list_linkeda2',methods=['GET'])
-# def lista_link_items(id):
+@app.route('/api/lista/items/<id>',endpoint='list_linkeda2',methods=['GET'])
+def lista_link_items(id):
     items = db.session.query(Items).filter_by(id_categoria=id).join(Categorias).order_by(asc(Categorias.nombre))
 
     return jsonify({

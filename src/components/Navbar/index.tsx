@@ -37,7 +37,7 @@ const MyNavbar: FC<MenuNav> = ({menuArr}) => {
             })}
           </Nav>
           <Nav>
-            <Nav.Link href="/login">Cerrar Sesión</Nav.Link>
+            <Nav.Link as={Link} key={"#" + '/login'} to={'/login'}>Cerrar Sesión</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
