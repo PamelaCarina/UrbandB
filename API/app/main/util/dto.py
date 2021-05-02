@@ -4,6 +4,7 @@ from flask_restplus import Namespace, fields
 class UserDto:
     api = Namespace('user', description='user related operations')
     user = api.model('user', {
+        'id': fields.Integer(required=True, description='user id'),
         'email': fields.String(required=True, description='user email address'),
         'username': fields.String(required=True, description='user username'),
         'password': fields.String(required=True, description='user password'),
@@ -19,8 +20,9 @@ class AuthDto:
     })
 
 class ItemDto:
-    api = Namespace('item', description='item functions AKJSDHGASKJDGASJHD')
+    api = Namespace('item', description='item functions')
     item = api.model('item', {
+        'id': fields.Integer(required=True, description='item id'),
         'codigo':fields.String(required=True,description='item codigo'),
         'nombre':fields.String(required=True,description='item nombre'),
         'unidad_medida':fields.String(required=True,description='item unidad de medida'),
@@ -32,12 +34,14 @@ class ItemDto:
 class AreasDto:
     api = Namespace('area', description='areas functions')
     area = api.model('area', {
+        'id': fields.Integer(required=True, description='area id'),
         'nombre':fields.String(required=True,description='area nombre'),
     })
     
 class CategoriasDto:
     api = Namespace('categoria', description='categoria functions')
     categoria = api.model('categoria', {
+        'id': fields.Integer(required=True, description='categoria id'),
         'nombre':fields.String(required=True,description='categoria nombre'),
         'id_area':fields.Integer(required=True,description='categoria id_area'),
     })

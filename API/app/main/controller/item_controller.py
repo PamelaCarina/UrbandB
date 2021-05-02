@@ -9,15 +9,17 @@ _item = ItemDto.item
 
 @api.route('/')
 class ItemsList(Resource):
+    print("AAAAAA")
     @api.doc('Lista de todos los items')
-    @api.marshal_list_with(_item, envelope='data')
+    # @api.marshal_list_with(_item, envelope='data')
     def get(self):
         return lista_items()
 
     @api.response(201, 'Item insertado')
     @api.doc('Crea un nuevo item')
-    @api.expect(_item, validate=True)
+    # @api.expect(_item, validate=True)
     def post(self):
+        print("AKI")
         data = request.json
         return ingresar_items(data=data)
 
@@ -26,7 +28,7 @@ class ItemsList(Resource):
 @api.response(404, 'Item not found.')
 class ItemsByCategory(Resource):
     @api.doc('Obtiene todos los items de una categoria')
-    @api.marshal_with(_item)
+    # @api.marshal_with(_item)
     def get(self, id):
         print(id)
         item = lista_link_items(id)
@@ -35,10 +37,10 @@ class ItemsByCategory(Resource):
         else:
             return item
 
-@api.route('/retirar')
+@api.route('/todo')
 class ItemsListRetirar(Resource):
     @api.doc('tabla todos los datos de items')
-    @api.marshal_list_with(_item, envelope='data')
+    # @api.marshal_list_with(_item, envelope='data')
     def get(self):
         return tabla_retirar()
 
@@ -50,18 +52,20 @@ class ItemsListRetirar(Resource):
         return retirar_item(data=data)
 
 
-@api.route('todo/<id>')
+@api.route('/todo/<id>')
 @api.param('id', 'The categoria identifier for an item')
 @api.response(404, 'Item not found.')
 class Items(Resource):
-    @api.doc('Obtiene todo de los items relacionado a una categoria')
-    @api.marshal_with(_item)
+    @api.doc('Obtiene todo de los items')
+    # @api.marshal_with(_item)
     def get(self, id):
         print(id)
         item = tabla_todo(id)
+        print(item)
         if not item:
             api.abort(404)
         else:
+            print(item)
             return item
 
 

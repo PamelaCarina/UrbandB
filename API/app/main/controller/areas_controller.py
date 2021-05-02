@@ -14,7 +14,6 @@ class Areas(Resource):
     def get(self):
         return lista_areas()
 
-
 #    @api.response(201, 'Area insertado')
 #   @api.doc('Crea una nueva area item')
 #    @api.expect(_area, validate=True)

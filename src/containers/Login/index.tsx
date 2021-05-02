@@ -1,32 +1,43 @@
-import React from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
+import MyNavbar from '../../components/Navbar';
+import MyForm from '../../components/Form';
 
+let menuNav =[
+  {
+  name: "",
+  rute: ""
+  }
+];
 const Login = () => {
-  return(
-    <div>
-      <Form>
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Rut</Form.Label>
-          <Form.Control type="number" placeholder="Ingrese su rut" />
-          <Form.Text className="text-muted">
-            Ej: 123456789
-          </Form.Text>
-        </Form.Group>
+  const [users, setUsers] = useState("");
 
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Contraseña</Form.Label>
-          <Form.Control type="password" placeholder="Contraseña" />
-        </Form.Group>
-        <Form.Group controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Ingresar
-        </Button>
-      </Form>
+  const handleLoginUsers = (user) => {
+    console.log(users);
+    let aux = [...users];
+    aux.push(user);    
+    setUsers(aux);
+  };
+
+  useEffect(()=>{
+    axios.get(`http://127.0.0.1:5000/user`)
+    .then(res => res.data.item)
+  },[])
+
+  return (
+    <div>
+      <div className="Login">
+        <MyNavbar menuArr={menuNav}> </MyNavbar>
+      </div>
+      <div className="Login">
+        <h2>Bienvenido</h2>
+        <h3>Por favor, ingrese su email, nombre de usuario y contraseña.</h3>
+      </div>
+      <div className="Login">
+        <MyForm handleLoginUsers={handleLoginUsers}></MyForm>
+      </div>
     </div>
-  )
+  );
 }
 
 export default Login;

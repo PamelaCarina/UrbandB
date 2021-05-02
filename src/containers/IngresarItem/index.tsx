@@ -52,17 +52,17 @@ let headTable = [
 const IngresarProducto = () => {
   const [items, setItems] = useState([]);
   const [newItems, setnewItems] = useState([]);
-  const handleAddItemsTable = (item) => {
+  const handleAddItemsTable = (data) => {
     console.log(newItems);
     let aux = [...newItems];
-    aux.push(item);    
+    aux.push(data);    
     setnewItems(aux);
   };
   useEffect(()=>{
-    axios.get(`http://127.0.0.1:5000/api/tabla/retirar`)
+    axios.get('http://127.0.0.1:5000/item/todo')
     .then(res => {
       console.log(res);
-      setItems(res.data.item)
+      setItems(res.data)
     })
   },[])
 
@@ -75,9 +75,8 @@ const IngresarProducto = () => {
       <div className="IngresarProducto">
         <MyForm handleAddItemsTable={handleAddItemsTable}></MyForm>
         <MyTable headArr={headTable} bodyArrItems={items}></MyTable>
-        {/* <MySubmitButton></MySubmitButton> */}
       </div>
-      {/* <div className="IngresarProducto">
+      {/* <div className="IngresarProducto inline (css)">
         <MyFooter></MyFooter>
       </div> */}
     </div>

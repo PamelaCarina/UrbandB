@@ -11,44 +11,80 @@ def lista_items():
 
     return items, 201
 
+# def ingresar_items(data):
+#     print("AAAAAAAAAA")
+#     codigo = data['codigo']
+#     nombre = data['nombre']
+#     unidad_medida = data['unidad_medida']
+#     id_categoria = data['id_categoria']
+#     critico = data['critico']
+#     cantidad = data['cantidad']
+#     new_item = Items()
+#     exists = db.session.query(db.exists().where(Items.codigo == codigo)).scalar()
+#     print(data)
+#     if exists:
+#         cambio = db.session().query(Items) \
+#             .filter_by(codigo=codigo,nombre=nombre,unidad_medida=unidad_medida) \
+#             .update({Items.cantidad: Items.cantidad + cantidad})
+#         db.session.commit()
+#         response_object = {
+#             'status': 'success',
+#             'message': 'Successfully registered.',
+#             'id': cambio
+#         }
+#         print(response_object)
+#         return response_object, 201
+
+#     else:
+#         new_item.codigo = codigo
+#         new_item.nombre = nombre
+#         new_item.unidad_medida = unidad_medida
+#         new_item.id_categoria = id_categoria
+#         new_item.critico = critico
+#         new_item.cantidad = cantidad
+
+#         db.session.add(new_item)
+#         db.session.commit()
+#         response_object = {
+#             'status': 'success',
+#             'message': 'Successfully registered.',
+#             'id': new_item.id
+#         }
+#         return response_object, 201
+
 def ingresar_items(data):
-    codigo = data['codigo']
-    nombre = data['nombre']
-    unidad_medida = data['unidad_medida']
-    id_categoria = data['id_categoria']
-    critico = data['critico']
-    cantidad = data['cantidad']
-    new_item = Items()
-    exists = db.session.query(db.exists().where(Items.codigo == codigo)).scalar()
-    if exists:
-        cambio = db.session().query(Items) \
-            .filter_by(codigo=codigo,nombre=nombre,unidad_medida=unidad_medida) \
-            .update({Items.cantidad: Items.cantidad + cantidad})
-        db.session.commit()
+    item = Items.query.filter_by(codigo=data['codigo'],nombre=data['nombre'],unidad_medida=data['unidad_medida']).first()
+    if not item:
+        new_item = Items(
+            codigo = data['codigo'],
+            nombre = data['nombre'],
+            unidad_medida = data['unidad_medida'],
+            id_categoria = data['id_categoria'],
+            critico = data['critico'],
+            cantidad = data['cantidad'],
+        )
+        save_changes(new_user)
         response_object = {
             'status': 'success',
-            'message': 'Successfully registered.',
-            'id': cambio
+            'message': 'Successfully registered.'
         }
         return response_object, 201
 
     else:
-        new_item.codigo = codigo
-        new_item.nombre = nombre
-        new_item.unidad_medida = unidad_medida
-        new_item.id_categoria = id_categoria
-        new_item.critico = critico
-        new_item.cantidad = cantidad
+      cambio = db.session().query(Items) \
+            .filter_by(codigo=data['codigo'],nombre=data['nombre'],unidad_medida=data['unidad_medida']) \
+            .update({Items.data['cantidad'] : Items.data['cantidad'] - cantidad})
 
-        db.session.add(new_item)
-        db.session.commit()
-        response_object = {
-            'status': 'success',
-            'message': 'Successfully registered.',
-            'id': new_item.id
-        }
-        return response_object, 201
+      response_object = {
+          'status': 'success',
+          'message': 'Successfully registered.'
+      }
+      return response_object, 201
 
+
+def save_changes(data):
+    db.session.add(data)
+    db.session.commit()
 
 def retirar_item(data):
     codigo = data['codigo']
@@ -77,18 +113,48 @@ def lista_link_items(id):
     items = db.session().query(Items).filter_by(id_categoria=id).join(Categorias).order_by(Categorias.nombre).all()
     return items
 
-def tabla_retirar():
+def tabla_retirar(): #ESTA FUNCIONA BIEN
     tabla = db.session.query(Items,Categorias,Areas).select_from(Items).join(Categorias).join(Areas).all()
-    return tabla, 201
-
+    ans = []
+    for elem in tabla:
+        myItem = elem[0]
+        myCategoria = elem[1]
+        myArea = elem[2]
+        aux = {
+            "codigo": myItem.codigo,
+            "nombre": myItem.nombre,
+            "area": myArea.nombre,
+            "categoria": myCategoria.nombre,
+            "id_categoria": myCategoria.id,
+            "cantidad": myItem.cantidad,
+            "unidad_medida": myItem.unidad_medida,
+            "critico": myItem.critico,
+            "timestamp": myItem.timestamp
+        }
+        ans.append(aux)
+    print(ans)
+    return ans, 201
 
 def tabla_todo(id):
-    tabla = db.session.query(Items,Categorias,Areas).select_from(Items).filter_by(id_categoria=id).join(Categorias).join(Areas).all()
-    return tabla, 201
-   
-    
-
-
-
-
-
+    tabla = db.session.query(Items,Categorias,Areas).select_from(Items).filter_by(id_categoria=id).join(Categorias).filter_by(id_area=id).join(Areas).all()
+    ans = []
+    for elem in tabla:
+        myItem = elem[0]
+        myCategoria = elem[1]
+        myArea = elem[2]
+        aux = {
+            "id": myItem.id,
+            "codigo": myItem.codigo,
+            "nombre": myItem.nombre,
+            "area": myArea.nombre,
+            "id_area": myArea.id,
+            "categoria": myCategoria.nombre,
+            "id_categoria": myCategoria.id,
+            "cantidad": myItem.cantidad,
+            "unidad_medida": myItem.unidad_medida,
+            "critico": myItem.critico,
+            "timestamp": myItem.timestamp
+        }
+        ans.append(aux)
+    print(ans)
+    return ans, 201

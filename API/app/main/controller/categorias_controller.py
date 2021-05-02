@@ -1,22 +1,22 @@
 from flask import request
 from flask_restplus import Resource
 
-from ..service.categorias_service import *
+from ..service.categorias_service import lista_link_categorias
 from ..util.dto import CategoriasDto
 
 api = CategoriasDto.api
 _categoria = CategoriasDto.categoria
 
-#@api.route('/api/categorias')
-#class Categorias(Resource):
-#    @api.doc('Lista de todos los items')
-#    @api.marshal_list_with(_categoria, envelope='data')
-#    def get(self):
-#        return lista_items()
-
-    #@api.response(201, 'Item insertado')
-   # @api.doc('Crea un nuevo item')
-  #  @api.expect(_categoria, validate=True)
- #   def post(self):
-#        data = request.json
-#        return ingresar_items(data=data)
+@api.route('/<id>')
+@api.param('id', 'Area con categoria')
+@api.response(404, 'categoria not found.')
+class Categorias(Resource):
+    @api.doc('Lista de todas las categorias')
+    # @api.marshal_with(_categoria)
+    def get(self, id):
+        print(id)
+        categoria = lista_link_categorias(id)
+        if not categoria:
+            api.abort(404)
+        else:
+            return categoria

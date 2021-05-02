@@ -50,17 +50,19 @@ let headTable = [
 const IngresarProducto = () => {
   const [items, setItems] = useState([]);
   const [newItems, setNewItems] = useState([]);
-  const handleRetirarItems = (item) => {
+  const handleRetirarItems = (items) => {
     console.log(newItems);
     let aux = [...newItems];
-    aux.push(item);    
+    aux.push(items);    
     setNewItems(aux);
   };
   useEffect(()=>{
-    axios.get(`http://127.0.0.1:5000/api/tabla/retirar`)
+    axios.get(`http://127.0.0.1:5000/item/todo`)
     .then(res => {
       console.log(res);
-      setItems(res.data.item)
+      setItems(res.data);
+      console.log(res.data);
+      
     })
   },[])
 

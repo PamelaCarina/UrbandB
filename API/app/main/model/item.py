@@ -14,3 +14,6 @@ class Items(db.Model):
     cantidad = db.Column(db.Integer, nullable=False)
     timestamp = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
     # movimientos = db.relationship('Movimientos', backref='movimientos')
+
+    def __repr__(self):
+        return "<Item '{}'>".format(self.codigo)
