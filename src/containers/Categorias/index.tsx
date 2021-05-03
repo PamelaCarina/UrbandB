@@ -9,9 +9,9 @@ import MyFooter from '../../components/Footer';
 
 let menuNav = [
   {
-    name: "Menú", 
+    name: "Menú",
     rute: "/menu"
-  }, 
+  },
   {
     name: "Áreas",
     rute: "/areas"

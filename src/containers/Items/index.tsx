@@ -8,13 +8,13 @@ import Alert from 'react-bootstrap/Alert';
 
 let menuNav = [
   {
-    name: "Menú", 
+    name: "Menú",
     rute: "/menu"
-  }, 
+  },
   {
-    name: "Áreas", 
+    name: "Áreas",
     rute: "/areas"
-  }, 
+  },
   {
     name: "Categorías",
     rute: `/categorias/:id`,
@@ -23,44 +23,44 @@ let menuNav = [
 
 let headTable = [
   {
-    dataField: 'codigo', 
+    dataField: 'codigo',
     text: 'Código'
-  }, 
+  },
   {
-    dataField: 'nombre', 
+    dataField: 'nombre',
     text: 'Nombre'
-  }, 
+  },
   {
-    dataField: 'cantidad', 
+    dataField: 'cantidad',
     text: 'Cantidad'
-  }, 
+  },
   {
-    dataField: 'unidad_medida', 
+    dataField: 'unidad_medida',
     text: 'Unidad de Medida'
-  }, 
+  },
   {
-    dataField: 'fecha', 
+    dataField: 'timestamp',
     text: 'Fecha'
   },
   {
-    text: ' alerta ', 
+    text: ' alerta ',
     formatter: (cell, row) => aviso_stock(row.cantidad, row.critico),
   }
 ];
 
 let aviso_stock = (cantidad, critico) => {
   if (cantidad > (critico + 4)) {
-    return ( 
+    return (
       <Alert variant='success'>Stock Ok</Alert>
     )
   }
   else if (cantidad > (critico + 2) && cantidad <= (critico + 4)){
-    return ( 
+    return (
       <Alert variant='warning'>Stock casi bajo</Alert>
     )
   }
   else if (cantidad <= (critico + 2)){
-    return ( 
+    return (
       <Alert variant='danger'>¡Stock Bajo!</Alert>
     )
   }
@@ -75,7 +75,7 @@ const Items = ({match}) => {
       setItems(res.data)
     })
   },[])
-  
+
   return (
     <div>
       <div className="Items">

@@ -18,9 +18,9 @@ let headTable = [
     text: 'Código'
   },
   {
-    dataField: 'categoria', 
+    dataField: 'categoria',
     text: 'Categoría'
-  }, 
+  },
   {
     dataField: 'area',
     text: 'Área'
@@ -53,7 +53,7 @@ const IngresarProducto = () => {
   const handleRetirarItems = (data) => {
     console.log(newItems);
     let aux = [...newItems];
-    aux.push(data);    
+    aux.push(data);
     setNewItems(aux);
   };
   useEffect(()=>{

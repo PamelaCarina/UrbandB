@@ -54,7 +54,7 @@ const MyTable: FC<tableArr> = ({headArr, bodyArrItems, bodyArrAreas, bodyArrCate
   }
   else if(bodyArrCategorias){
       columns= headArr
-      rows=bodyArrCategorias    
+      rows=bodyArrCategorias
   }
   // else if(bodyArrNewItems){
   //   columns= headArr
@@ -66,7 +66,7 @@ const MyTable: FC<tableArr> = ({headArr, bodyArrItems, bodyArrAreas, bodyArrCate
       Producto { from } al { to } de un total { size }.
     </span>
   );
-  
+
   const options = {
     paginationSize: 10,
     pageStartIndex: 1,
@@ -89,7 +89,7 @@ const MyTable: FC<tableArr> = ({headArr, bodyArrItems, bodyArrAreas, bodyArrCate
       text: '4', value: 4
     }, {
       text: '6', value: 6
-    }, 
+    },
     // {
     //   text: 'All', value: rows.length
     // }
@@ -98,10 +98,10 @@ const MyTable: FC<tableArr> = ({headArr, bodyArrItems, bodyArrAreas, bodyArrCate
 
   return (
     <div>
-      <BootstrapTable 
-        keyField='id' 
-        data={ rows } 
-        columns={ columns } 
+      <BootstrapTable
+        keyField='id'
+        data={ rows }
+        columns={ columns }
         pagination={ paginationFactory(options) }
         striped
         hover

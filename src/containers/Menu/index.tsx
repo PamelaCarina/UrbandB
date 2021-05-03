@@ -17,7 +17,7 @@ const Menu = () => {
     })
   },[])
   console.log(items);
-  
+
   return (
     <div>
       {/* <Alerts alertas={items}></Alerts> */}
