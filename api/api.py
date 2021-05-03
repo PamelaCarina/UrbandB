@@ -5,10 +5,13 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from sqlalchemy.sql import exists
 from sqlalchemy.sql.expression import desc, asc
+import locale
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
+
+locale.setlocale(locale.LC_ALL, 'es_CL')
 
 #TABLAS
 
@@ -101,14 +104,14 @@ def ingresar_items():
 
 @app.route('/api/lista/categorias/<id>',endpoint='list_linkeda',methods=['GET'])
 def lista_link_categorias(id):
-    categorias = db.session.query(Categorias).filter_by(id_area=id).join(Areas).order_by(asc(Areas.nombre))
+    lista = db.session.query(Categorias, Areas).filter_by(id_area=id).join(Areas).all()
 
     return jsonify({
-        "categoria": [{"id": x.id, "nombre": x.nombre} for x in categorias]
+        "categoria": [{"id": categorias.id, "nombre": categorias.nombre, "area": areas.nombre} for categorias, areas in lista]
     })
 
-@app.route('/api/lista/items/<id>',endpoint='list_linkeda2',methods=['GET'])
-def lista_link_items(id):
+# @app.route('/api/lista/items/<id>',endpoint='list_linkeda2',methods=['GET'])
+# def lista_link_items(id):
     items = db.session.query(Items).filter_by(id_categoria=id).join(Categorias).order_by(asc(Categorias.nombre))
 
     return jsonify({
@@ -131,13 +134,13 @@ def lista_areas():
       "area": [{"id": x.id, "nombre": x.nombre} for x in areas]
     })
 
-# @app.route('/api/categorias/lista/', endpoint='lista_categorias', methods= ['GET'])
-# def lista_categorias():
-#     categorias = Categorias.query.order_by(Categorias.id).all()
+@app.route('/api/categorias/lista/', endpoint='lista_categorias', methods= ['GET'])
+def lista_categorias():
+    categorias = Categorias.query.order_by(Categorias.id).all()
 
-#     return jsonify({
-#       "categoria": [{"id": x.id, "nombre": x.nombre, "id_area": x.id_area} for x in categorias ]
-#       })
+    return jsonify({
+      "categoria": [{"id": x.id, "nombre": x.nombre, "id_area": x.id_area} for x in categorias ]
+      })
 
 @app.route('/api/login',methods=['POST'])
 def login():
@@ -153,6 +156,13 @@ def tabla_retirar():
     tabla = db.session.query(Items,Categorias,Areas).select_from(Items).join(Categorias).join(Areas).all()
     return jsonify({
         "item": [{"codigo": items.codigo , "nombre": items.nombre, "unidad_medida": items.unidad_medida, "area": areas.nombre, "categoria": categorias.nombre , "critico": items.critico, "cantidad": items.cantidad, "fecha": items.timestamp} for items,categorias,areas in tabla]
+    })
+
+@app.route('/api/tabla/todo/<id>',methods=['GET'])
+def tabla_todo(id):
+    tabla = db.session.query(Items,Categorias,Areas).select_from(Items).filter_by(id_categoria=id).join(Categorias).join(Areas).all()
+    return jsonify({
+        "item": [{"codigo": items.codigo , "nombre": items.nombre, "unidad_medida": items.unidad_medida, "area": areas.nombre, "id_categoria": categorias.id, "categoria": categorias.nombre , "critico": items.critico, "cantidad": items.cantidad, "fecha": items.timestamp} for items,categorias,areas in tabla]
     })
 
 @app.route('/api/retirar/items',methods=['POST'])

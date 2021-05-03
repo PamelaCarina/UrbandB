@@ -11,10 +11,6 @@ let menuNav = [
     name:"Menú",
     rute: "/menu"
   },
-  {
-    name: "Cerrar sesión",
-    rute: "/login"
-  }
 ];
 let headTable = [
   {
@@ -22,8 +18,8 @@ let headTable = [
     text: 'Código'
   },
   {
-    dataField: 'Categoría',
-    text: 'categoria'
+    dataField: 'categoria',
+    text: 'Categoría'
   },
   {
     dataField: 'area',
@@ -60,13 +56,13 @@ const IngresarProducto = () => {
     aux.push(item);
     setNewItems(aux);
   };
-   useEffect(()=>{
-     axios.get('http://127.0.0.1:5000/api/tabla/retirar')
-     .then(res => {
-       console.log(res);
+  useEffect(()=>{
+    axios.get(`http://127.0.0.1:5000/api/tabla/retirar`)
+    .then(res => {
+      console.log(res);
       setItems(res.data.item)
-     })
-   },[])
+    })
+  },[])
 
   return (
     <div>

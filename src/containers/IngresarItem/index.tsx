@@ -5,30 +5,35 @@ import axios from 'axios';
 import MyTable from '../../components/Table';
 import MyNavbar from '../../components/Navbar';
 import MyForm from '../../components/Form';
-import MySubmitButton from '../../components/SubmitButton';
+import MySubmitButton from '../../components/Tittle';
 import MyFooter from '../../components/Footer';
 
-let menuNav = [{name:"Menú", rute: "/menu"}, {name: "Cerrar sesión", rute: "/login"}];
+let menuNav = [
+  {
+    name:"Menú", 
+    rute: "/menu"
+  },
+];
 let headTable = [
   {
     dataField: 'codigo', 
     text: 'Código'
   }, 
-  // {
-  //   dataField: 'Categoría', 
-  //   text: 'categoria'
-  // }, 
-  // {
-  //   dataField: 'area', 
-  //   text: 'Área'
-  // }, 
+  {
+    dataField: 'categoria', 
+    text: 'Categoría'
+  }, 
+  {
+    dataField: 'area', 
+    text: 'Área'
+  }, 
   {
     dataField: 'nombre', 
     text: 'Nombre'
   }, 
   {
     dataField: 'unidad_medida', 
-    text: 'Unidad de Medida'
+    text: 'UM'
   }, 
   {
     dataField: 'cantidad', 
@@ -45,6 +50,7 @@ let headTable = [
 ];
 
 const IngresarProducto = () => {
+  const [items, setItems] = useState([]);
   const [newItems, setnewItems] = useState([]);
   const handleAddItemsTable = (item) => {
     console.log(newItems);
@@ -52,15 +58,23 @@ const IngresarProducto = () => {
     aux.push(item);    
     setnewItems(aux);
   };
+  useEffect(()=>{
+    axios.get(`http://127.0.0.1:5000/api/tabla/retirar`)
+    .then(res => {
+      console.log(res);
+      setItems(res.data.item)
+    })
+  },[])
 
   return (
     <div>
       <div className="IngresarProducto">
         <MyNavbar menuArr={menuNav}> </MyNavbar>
       </div>
+      <div>Por favor ingrese un producto</div>
       <div className="IngresarProducto">
         <MyForm handleAddItemsTable={handleAddItemsTable}></MyForm>
-        <MyTable headArr={headTable} bodyArrNewItems={newItems}></MyTable>
+        <MyTable headArr={headTable} bodyArrItems={items}></MyTable>
         {/* <MySubmitButton></MySubmitButton> */}
       </div>
       {/* <div className="IngresarProducto">

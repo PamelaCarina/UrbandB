@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-//import { useHistory } from 'react-router-dom';
-//import '../App.global.css';
 import MyTable from '../../components/Table';
 import MyNavbar from '../../components/Navbar';
+import MyTittle from '../../components/Tittle';
 import MyFooter from '../../components/Footer';
 import Alert from 'react-bootstrap/Alert';
 
@@ -17,10 +16,11 @@ let menuNav = [
     rute: "/areas"
   }, 
   {
-    name:"Cerrar Sesión", 
-    rute:"/login"
-  }
+    name: "Categorías",
+    rute: `/categorias/:id`,
+  },
 ];
+
 let headTable = [
   {
     dataField: 'codigo', 
@@ -49,12 +49,12 @@ let headTable = [
 ];
 
 let aviso_stock = (cantidad, critico) => {
-  if (cantidad >= (critico + 5)) {
+  if (cantidad > (critico + 4)) {
     return ( 
       <Alert variant='success'>Stock Ok</Alert>
     )
   }
-  else if (cantidad >= (critico + 2) && cantidad <= (critico + 4)){
+  else if (cantidad > (critico + 2) && cantidad <= (critico + 4)){
     return ( 
       <Alert variant='warning'>Stock casi bajo</Alert>
     )
@@ -65,27 +65,35 @@ let aviso_stock = (cantidad, critico) => {
     )
   }
 };
-  
+
 const Items = ({match}) => {
   let params = match.params;
   const [items, setItems] = useState([]);
+  // const [nombres, setNombres] = useState([]);
   useEffect(()=>{
-    axios.get(`http://127.0.0.1:5000/api/lista/items/${params.id}`)
+    // axios.get(`http://127.0.0.1:5000/api/lista/items/${params.id}`)
+    // .then(res => {
+    //   setItems(res.data.item)
+    // })
+    axios.get(`http://127.0.0.1:5000/api/tabla/todo/${params.id}`)
     .then(res => {
-      console.log(res);
       setItems(res.data.item)
     })
   },[])
+  
   return (
     <div>
       <div className="Items">
-        <MyNavbar menuArr={menuNav}></MyNavbar>
+        <MyNavbar menuArr={menuNav}/>
       </div>
       <div className="Items">
-        <MyTable headArr={headTable} bodyArrItems={items}></MyTable>
+        <MyTittle nombres_items={items}/>
+      </div>
+      <div className="Items">
+        <MyTable headArr={headTable} bodyArrItems={items}/>
       </div>
       {/* <div className="Items">
-        <MyFooter></MyFooter>
+        <MyFooter/>
       </div> */}
     </div>
   );

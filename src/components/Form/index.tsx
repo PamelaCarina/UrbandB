@@ -38,8 +38,7 @@ const MyForm: FC<props> = ({ handleAddItemsTable, handleRetirarItems}) => {
       axios.post('http://127.0.0.1:5000/api/items/insert', {data} )
       .then(res => {
         console.log(res);
-      })
-      
+      })  
     }
 
     return(

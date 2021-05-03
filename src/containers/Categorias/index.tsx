@@ -1,26 +1,21 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
-import { Link, useParams } from 'react-router-dom';
-// import { useHistory } from 'react-router-dom';
-//import '../App.global.css';
+import { Link} from 'react-router-dom';
 import MyTable from '../../components/Table';
+import MyTittle from '../../components/Tittle';
 import MyNavbar from '../../components/Navbar';
 import MyFooter from '../../components/Footer';
 
 let menuNav = [
   {
-    name: "Menú", 
+    name: "Menú",
     rute: "/menu"
-  }, 
+  },
   {
     name: "Áreas",
     rute: "/areas"
-  }, 
-  {
-    name:"Cerrar Sesión",
-    rute:"/login"
-  }
+  },
 ];
 let headTable = [
   {
@@ -42,8 +37,7 @@ let revisar = (id) => {
 const Categorias = ({match}) => {
   let params = match.params;
   const [categorias, setCategorias] = useState([]);
-  console.log(params.id);
-
+  // console.log(params.id);
   useEffect(()=>{
     axios.get(`http://127.0.0.1:5000/api/lista/categorias/${params.id}`)
     .then(res => {
@@ -56,6 +50,9 @@ const Categorias = ({match}) => {
     <div>
       <div className="Categorias">
         <MyNavbar menuArr={menuNav}></MyNavbar>
+      </div>
+      <div className="Categorias">
+        <MyTittle nombres_areas={categorias}></MyTittle>
       </div>
       <div className="Categorias">
         <MyTable headArr={headTable} bodyArrCategorias={categorias}></MyTable>
