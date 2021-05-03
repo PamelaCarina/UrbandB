@@ -42,7 +42,7 @@ let headTable = [
     text: 'Stock Crítico'
   },
   {
-    dataField: 'fecha',
+    dataField: 'timestamp',
     text: 'Fecha'
   },
 ];

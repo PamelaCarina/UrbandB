@@ -1,10 +1,14 @@
 import uuid
 import datetime
+import pytz
+from dateutil import tz
 
 from app.main import db
 from app.main.model.item import Items
 from app.main.model.categorias import Categorias
 from app.main.model.areas import Areas
+
+utc_timezone = pytz.timezone("UTC")
 
 def lista_items():
     items = Items.query.order_by(Items.id).all()
@@ -88,6 +92,8 @@ def tabla_retirar(): #ESTA FUNCIONA BIEN
         myItem = elem[0]
         myCategoria = elem[1]
         myArea = elem[2]
+        STGO = tz.gettz('America/Santiago')
+        with_timezone = utc_timezone .localize(myItem.timestamp)
         aux = {
             "codigo": myItem.codigo,
             "nombre": myItem.nombre,
@@ -97,7 +103,7 @@ def tabla_retirar(): #ESTA FUNCIONA BIEN
             "cantidad": myItem.cantidad,
             "unidad_medida": myItem.unidad_medida,
             "critico": myItem.critico,
-            "timestamp": myItem.timestamp
+            "timestamp": with_timezone.astimezone(tz=STGO).strftime("%d-%m-%Y %H:%M")
         }
         ans.append(aux)
     print(ans)
@@ -110,6 +116,8 @@ def tabla_todo(id):
         myItem = elem[0]
         myCategoria = elem[1]
         myArea = elem[2]
+        STGO = tz.gettz('America/Santiago')
+        with_timezone = utc_timezone .localize(myItem.timestamp)
         aux = {
             "id": myItem.id,
             "codigo": myItem.codigo,
@@ -121,7 +129,7 @@ def tabla_todo(id):
             "cantidad": myItem.cantidad,
             "unidad_medida": myItem.unidad_medida,
             "critico": myItem.critico,
-            "timestamp": myItem.timestamp
+            "timestamp": with_timezone.astimezone(tz=STGO).strftime("%d-%m-%Y %H:%M")
         }
         ans.append(aux)
     print(ans)
