@@ -11,75 +11,45 @@ def lista_items():
 
     return items, 201
 
-# def ingresar_items(data):
-#     print("AAAAAAAAAA")
-#     codigo = data['codigo']
-#     nombre = data['nombre']
-#     unidad_medida = data['unidad_medida']
-#     id_categoria = data['id_categoria']
-#     critico = data['critico']
-#     cantidad = data['cantidad']
-#     new_item = Items()
-#     exists = db.session.query(db.exists().where(Items.codigo == codigo)).scalar()
-#     print(data)
-#     if exists:
-#         cambio = db.session().query(Items) \
-#             .filter_by(codigo=codigo,nombre=nombre,unidad_medida=unidad_medida) \
-#             .update({Items.cantidad: Items.cantidad + cantidad})
-#         db.session.commit()
-#         response_object = {
-#             'status': 'success',
-#             'message': 'Successfully registered.',
-#             'id': cambio
-#         }
-#         print(response_object)
-#         return response_object, 201
-
-#     else:
-#         new_item.codigo = codigo
-#         new_item.nombre = nombre
-#         new_item.unidad_medida = unidad_medida
-#         new_item.id_categoria = id_categoria
-#         new_item.critico = critico
-#         new_item.cantidad = cantidad
-
-#         db.session.add(new_item)
-#         db.session.commit()
-#         response_object = {
-#             'status': 'success',
-#             'message': 'Successfully registered.',
-#             'id': new_item.id
-#         }
-#         return response_object, 201
-
 def ingresar_items(data):
-    item = Items.query.filter_by(codigo=data['codigo'],nombre=data['nombre'],unidad_medida=data['unidad_medida']).first()
-    if not item:
-        new_item = Items(
-            codigo = data['codigo'],
-            nombre = data['nombre'],
-            unidad_medida = data['unidad_medida'],
-            id_categoria = data['id_categoria'],
-            critico = data['critico'],
-            cantidad = data['cantidad'],
-        )
-        save_changes(new_user)
+    codigo = data['codigo']
+    nombre = data['name']
+    unidad_medida = data['unidadMedida']
+    id_categoria = data['id_categoria']
+    critico = data['critico']
+    cantidad = data['cantidad']
+    new_item = Items()
+    exists = db.session.query(db.exists().where(Items.codigo == codigo)).scalar()
+    print(data)
+    if exists:
+        cambio = db.session().query(Items) \
+            .filter_by(codigo=codigo,nombre=nombre,unidad_medida=unidad_medida) \
+            .update({Items.cantidad: Items.cantidad + cantidad})
+        db.session.commit()
         response_object = {
             'status': 'success',
-            'message': 'Successfully registered.'
+            'message': 'Successfully registered.',
+            'id': cambio
         }
+        print(response_object)
         return response_object, 201
 
     else:
-      cambio = db.session().query(Items) \
-            .filter_by(codigo=data['codigo'],nombre=data['nombre'],unidad_medida=data['unidad_medida']) \
-            .update({Items.data['cantidad'] : Items.data['cantidad'] - cantidad})
+        new_item.codigo = codigo
+        new_item.nombre = nombre
+        new_item.unidad_medida = unidad_medida
+        new_item.id_categoria = id_categoria
+        new_item.critico = critico
+        new_item.cantidad = cantidad
 
-      response_object = {
-          'status': 'success',
-          'message': 'Successfully registered.'
-      }
-      return response_object, 201
+        db.session.add(new_item)
+        db.session.commit()
+        response_object = {
+            'status': 'success',
+            'message': 'Successfully registered.',
+            'id': new_item.id
+        }
+        return response_object, 201
 
 
 def save_changes(data):
@@ -88,10 +58,8 @@ def save_changes(data):
 
 def retirar_item(data):
     codigo = data['codigo']
-    nombre = data['nombre']
-    unidad_medida = data['unidad_medida']
-    id_categoria = data['id_categoria']
-    critico = data['critico']
+    nombre = data['name']
+    unidad_medida = data['unidadMedida']
     cantidad = data['cantidad']
     exists = db.session.query(db.exists().where(Items.codigo == codigo)).scalar()
     if exists:

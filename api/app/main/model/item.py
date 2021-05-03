@@ -1,6 +1,7 @@
 from .. import db
 from datetime import datetime
 from ..config import key
+import json
 
 class Items(db.Model):
     __tablename__ = 'items'
@@ -17,3 +18,7 @@ class Items(db.Model):
 
     def __repr__(self):
         return "<Item '{}'>".format(self.codigo)
+
+def default(obj):
+    if isinstance(obj, (datetime.date, datetime.datetime)):
+        return obj.isoformat()

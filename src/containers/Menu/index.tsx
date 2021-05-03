@@ -20,7 +20,7 @@ const Menu = () => {
 
   return (
     <div>
-      <Alerts alertas={items}></Alerts>
+      {/* <Alerts alertas={items}></Alerts> */}
       <div className="Menu">
         <MyNavbar menuArr={menuNav}> </MyNavbar>
       </div>
