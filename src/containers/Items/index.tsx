@@ -69,15 +69,10 @@ let aviso_stock = (cantidad, critico) => {
 const Items = ({match}) => {
   let params = match.params;
   const [items, setItems] = useState([]);
-  // const [nombres, setNombres] = useState([]);
   useEffect(()=>{
-    // axios.get(`http://127.0.0.1:5000/api/lista/items/${params.id}`)
-    // .then(res => {
-    //   setItems(res.data.item)
-    // })
-    axios.get(`http://127.0.0.1:5000/api/tabla/todo/${params.id}`)
+    axios.get(`http://127.0.0.1:5000/item/todo/${params.id}`)
     .then(res => {
-      setItems(res.data.item)
+      setItems(res.data)
     })
   },[])
   

@@ -24,6 +24,8 @@ let headTable = [
 ];
 
 let revisar = (id) => {
+  console.log(id);
+  
   return(
     <Button variant="outline-dark" as={Link} to={`/categorias/${id}`}> Revisar </Button>
   )
@@ -32,9 +34,11 @@ let revisar = (id) => {
 const Areas = () =>  {
   const [areas, setAreas] = useState([]);
   useEffect(()=>{
-    axios.get('http://127.0.0.1:5000/api/areas/lista')
+    axios.get('http://127.0.0.1:5000/area/')
     .then(res => {
-      setAreas(res.data.area)
+      console.log(res);
+      setAreas(res.data.data)
+      console.log(res.data.data);
     })
   },[])
 

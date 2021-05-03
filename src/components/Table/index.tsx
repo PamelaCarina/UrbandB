@@ -32,7 +32,7 @@ interface tableArr {
 
   bodyArrAreas ? : {
     id: number;
-    areas: string;
+    nombre: string;
   }[];
 
   bodyArrCategorias ? : {

@@ -10,15 +10,17 @@ let menuNav = [{name: " ", rute: " "}];
 const Menu = () => {
   const [items, setItems] = useState([]);
   useEffect(()=>{
-    axios.get(`http://127.0.0.1:5000/api/items/lista`)
+    axios.get(`http://127.0.0.1:5000/item/todo`)
     .then(res => {
       console.log(res);
-      setItems(res.data.item)
+      setItems(res.data)
     })
   },[])
+  console.log(items);
+
   return (
     <div>
-      {/* <Alerts alertas={items}></Alerts> */}
+      <Alerts alertas={items}></Alerts>
       <div className="Menu">
         <MyNavbar menuArr={menuNav}> </MyNavbar>
       </div>

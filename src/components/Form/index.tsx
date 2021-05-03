@@ -9,22 +9,20 @@ import MyTable from '../../components/Table';
 interface props {
   handleAddItemsTable ?: (item) => void;
   handleRetirarItems ?: (item) => void;
+  handleLoginUsers ?: (user) => void;
 }
 
-//necesito que los datos primero se agreguen a la tabla y después hacer un botón en la tabla de ingresar
-
-const MyForm: FC<props> = ({ handleAddItemsTable, handleRetirarItems}) => {
-  const [codigo, setCodigo] = useState("");
-  const [name, setName] = useState("");
-  const [unidadMedida, setUnidadMedida] = useState("");
-  const [critico, setCritico] = useState("");
-  const [cantidad, setCantidad] = useState("");
-  const [id_categoria, setId_categoria] = useState("");
+const MyForm: FC<props> = ({ handleAddItemsTable, handleRetirarItems, handleLoginUsers}) => {
 
   if(handleAddItemsTable){
+    const [codigo, setCodigo] = useState("");
+    const [name, setName] = useState("");
+    const [unidadMedida, setUnidadMedida] = useState("");
+    const [critico, setCritico] = useState("");
+    const [cantidad, setCantidad] = useState("");
+    const [id_categoria, setId_categoria] = useState("");
     const handleSubmit = (e) =>{
       e.preventDefault();
-      // console.log(name);
       const data = {
         codigo: codigo,
         nombre: name,
@@ -35,12 +33,11 @@ const MyForm: FC<props> = ({ handleAddItemsTable, handleRetirarItems}) => {
       }
       handleAddItemsTable(data);
 
-      axios.post('http://127.0.0.1:5000/api/items/insert', {data} )
+      axios.post('http://127.0.0.1:5000/item/', {data} )
       .then(res => {
         console.log(res);
-      })  
+      })
     }
-
     return(
       <div>
         <Form onSubmit = {handleSubmit}>
@@ -110,7 +107,13 @@ const MyForm: FC<props> = ({ handleAddItemsTable, handleRetirarItems}) => {
   }
 
   else if(handleRetirarItems){
-    const retirarData = (e) => {
+    const [codigo, setCodigo] = useState("");
+    const [name, setName] = useState("");
+    const [unidadMedida, setUnidadMedida] = useState("");
+    const [critico, setCritico] = useState("");
+    const [cantidad, setCantidad] = useState("");
+    const [id_categoria, setId_categoria] = useState("");
+    const handleRetirarData = (e) => {
       e.preventDefault();
       const data ={
         codigo: codigo,
@@ -127,7 +130,7 @@ const MyForm: FC<props> = ({ handleAddItemsTable, handleRetirarItems}) => {
     return(
       <div>
         <h1>RETIRAR PRODUCTO</h1>
-        <Form onSubmit = {retirarData}>
+        <Form onSubmit = {handleRetirarData}>
           <Form.Row>
             <Form.Group as={Col} controlId="codigo">
               <Form.Label>Código</Form.Label>
@@ -174,9 +177,54 @@ const MyForm: FC<props> = ({ handleAddItemsTable, handleRetirarItems}) => {
       </div>
     )
   }
+  else if(handleLoginUsers){
+    const [validated, setValidated] = useState(false);
+    const handleSubmit = (e) => {
+      const form = e.currentTarget;
+      if (form.checkValidity() === false) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      setValidated(true);
+      e.preventDefault();
+      const data ={
+        email: email,
+        username: username,
+        password: password,
+      }
+      handleLoginUsers(data);
+      axios.post('http://127.0.0.1:5000/api/user/<public_id>', {data} )
+      .then(res => {
+        console.log(res);
+      })
+    }
+    return(
+      <div>
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+          <Form.Group md="4" controlId="username">
+            <Form.Label>Nombre</Form.Label>
+            <Form.Control required type="text" placeholder="First name"/>
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group md="4" controlId="email">
+            <Form.Label>Email</Form.Label>
+            <Form.Control required type="email" placeholder="Enter email" />
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group md="4" controlId="password">
+            <Form.Label>Password</Form.Label>
+            <Form.Control required type="password" placeholder="Password" />
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+          </Form.Group>
+  
+          <Button type="submit">Submit form</Button>
+        </Form>
+      </div>
+    )
+  }
   return(
     <div></div>
-  );
+  )
 };
 
 export default MyForm;

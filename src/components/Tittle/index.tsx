@@ -7,6 +7,7 @@ interface props{
     }[],
     nombres_areas:{
         area:string;
+        nombre:string;
     }[],
 }
 
@@ -14,6 +15,7 @@ const MyTittle: FC<props> = ({nombres_items, nombres_areas}) => {
     let areas;
     let categorias;
     let aux;
+    let nombre;
     if(nombres_items){
         aux = nombres_items.map((elem)=>{
             areas = elem.area;
@@ -26,9 +28,13 @@ const MyTittle: FC<props> = ({nombres_items, nombres_areas}) => {
     else if(nombres_areas){
         aux = nombres_areas.map((elem)=>{
             areas = elem.area;
+            nombre = elem.nombre;
         })
         return(
-            <h2>Se encuentra en "{areas}"</h2>
+            <div>
+                <h2>{nombre}</h2>    
+                <h4>Se encuentra en el área "{areas}"</h4>
+            </div>
         )
     }
     return(
