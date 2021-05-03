@@ -50,10 +50,10 @@ let headTable = [
 const IngresarProducto = () => {
   const [items, setItems] = useState([]);
   const [newItems, setNewItems] = useState([]);
-  const handleRetirarItems = (items) => {
+  const handleRetirarItems = (data) => {
     console.log(newItems);
     let aux = [...newItems];
-    aux.push(items);    
+    aux.push(data);    
     setNewItems(aux);
   };
   useEffect(()=>{
@@ -61,8 +61,7 @@ const IngresarProducto = () => {
     .then(res => {
       console.log(res);
       setItems(res.data);
-      console.log(res.data);
-      
+      // console.log(res.data);
     })
   },[])
 

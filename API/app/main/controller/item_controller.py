@@ -19,8 +19,9 @@ class ItemsList(Resource):
     @api.doc('Crea un nuevo item')
     # @api.expect(_item, validate=True)
     def post(self):
-        print("AKI")
+        print("CONTROLLER")
         data = request.json
+        print(data)
         return ingresar_items(data=data)
 
 @api.route('/<id>')
@@ -46,7 +47,7 @@ class ItemsListRetirar(Resource):
 
     @api.response(201, 'Item retirado')
     @api.doc('Retira un item')
-    @api.expect(_item, validate=True)
+    # @api.expect(_item, validate=True)
     def post(self):
         data = request.json
         return retirar_item(data=data)

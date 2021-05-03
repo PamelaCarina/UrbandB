@@ -33,7 +33,7 @@ const MyForm: FC<props> = ({ handleAddItemsTable, handleRetirarItems, handleLogi
       }
       handleAddItemsTable(data);
 
-      axios.post('http://127.0.0.1:5000/item/', {data} )
+      axios.post('http://127.0.0.1:5000/item/', {codigo, name, unidadMedida, critico, cantidad, id_categoria} )
       .then(res => {
         console.log(res);
       })
@@ -110,9 +110,7 @@ const MyForm: FC<props> = ({ handleAddItemsTable, handleRetirarItems, handleLogi
     const [codigo, setCodigo] = useState("");
     const [name, setName] = useState("");
     const [unidadMedida, setUnidadMedida] = useState("");
-    const [critico, setCritico] = useState("");
     const [cantidad, setCantidad] = useState("");
-    const [id_categoria, setId_categoria] = useState("");
     const handleRetirarData = (e) => {
       e.preventDefault();
       const data ={
@@ -122,7 +120,7 @@ const MyForm: FC<props> = ({ handleAddItemsTable, handleRetirarItems, handleLogi
         cantidad: cantidad,
       }
       handleRetirarItems(data);
-      axios.post('http://127.0.0.1:5000/api/retirar/items', {data} )
+      axios.post('http://127.0.0.1:5000/item/todo', {codigo, name, unidadMedida, cantidad})
       .then(res => {
         console.log(res);
       })
