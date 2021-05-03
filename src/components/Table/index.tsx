@@ -17,7 +17,7 @@ interface tableArr {
     critico: number;
     categoria: string;
     area: string;
-    fecha: string;
+    timestamp: string;
   }[];
 
   // bodyArrNewItems ? : {
